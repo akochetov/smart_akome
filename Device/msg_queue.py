@@ -21,7 +21,8 @@ class Signal():
     DeviceID = 0
     Device = ""
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credentials = pika.PlainCredentials('pi','pi')
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.100', credentials=credentials))
 channel = connection.channel()
 
 channel.queue_declare(queue='smart_akome', durable = False, exclusive = False, auto_delete = False)
