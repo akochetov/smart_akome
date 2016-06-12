@@ -2,12 +2,12 @@ import RPi.GPIO as GPIO
 from AKO.GPIO._GPIODevice import *
 
 #InputDevice class for buttons ans switches
-class InputDevice():
+class InputDevice(GPIODevice):
 
     SignalReceived = None   #signal received event. None by default
     bouncetime = 0
   
-    def __init__(self, pin, pullup=True, bouncetime = 0):
+    def __init__(self, pin, pullup=True, bouncetime = -666):
         GPIODevice.__init__(self)
         self.pin = pin
         self.bouncetime = bouncetime
@@ -21,7 +21,7 @@ class InputDevice():
 
     def SubscribeToGPIO(self):
         GPIO.remove_event_detect(self.pin)
-        GPIO.add_event_detect(self.pin,GPIO.BOTH, callback=self.OnMessageReceived, bouncetime=self.bouncetime)
+        GPIO.add_event_detect(self.pin, GPIO.BOTH, callback=self.OnMessageReceived, bouncetime=self.bouncetime)
 
     def SetBounceTime(bouncetime):
         self.bouncetime = bouncetime

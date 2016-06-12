@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 from AKO.GPIO._GPIODevice import *
 
 #OutputDevice class for leds and buzzers
-class OutputDevice():
+class OutputDevice(GPIODevice):
     
     def __init__(self, pin):
         GPIODevice.__init__(self)

@@ -11,7 +11,8 @@ from AKO.GPIO._OutputDevice import *
 class IrTxDevice(OutputDevice):
     #------------------------------------------
     #constants
-    bitrate = 0.0007          #signal bitrate. Seems to be 0.0007 for IR. Change if needed
+    bitrate = 0.002          #signal bitrate. Seems to be 0.0007 for IR. Change if needed
+    lastirtx = 0            #time of last transmission
 
     #-----------------------------------------------
     #Constructor. Starts message received thread and registers callbacks
@@ -29,4 +30,22 @@ class IrTxDevice(OutputDevice):
                     self.On()
                 else:
                     self.Off()
-            Time.sleep(self.bitrate)
+                    
+                self.lastirtx = self.Time()
+                self.Sleep()
+
+        self.lastirtx = 0
+        self.Off()
+    #-----------------------------------------------
+    #Utility method to detect precise time
+    def Sleep(self):
+        while (self.Diff()<self.bitrate):
+            2*2#Time.sleep(self.bitrate/10)
+    #-----------------------------------------------
+    #Utility method to detect precise time
+    def Time(self):
+        return Time.time()+Time.clock()
+    #-----------------------------------------------
+    #Utility method to detect time diff from last sample
+    def Diff(self):
+        return abs(self.Time()-self.lastirtx);

@@ -17,6 +17,7 @@ class IrRxMessageThread(threading.Thread):
     def run(self):
         while not self._exiting:
             Time.sleep(self._device.message_timeout)
+
             if (self._device.IsMessageTimedOut()):
                 self._device.TriggerMessageReceived()
 
@@ -33,12 +34,14 @@ class IrRxMessageThread(threading.Thread):
 class IrRxDevice(InputDevice):
     #------------------------------------------
     #constants
-    message_timeout = 0.1  #in seconds. if there is no signal received during 10ms - treat transmission as finished
+    message_timeout = 0.1     #in seconds. if there is no signal received during 10ms - treat transmission as finished
     lastirrx = 0            #last signal receiving time
-    bitrate = 0.0007         #signal bitrate. Seems to be 0.0007 for IR. Change if needed
+    bitrate = 0.0007        #signal bitrate. Seems to be 0.0007 for IR. Change if needed
     buffer = []             #internal buffer to store incoming signal time spans
     last_state = 0          #last signal state (high or low)
-    MessageReceived = None #event for message receiving. None by default
+    min_msg_length = 5      #minimal # of lows and highs in message to treat it valid
+    start_bits_length = 10  #number of start bits to detect beginning of the message
+    MessageReceived = None  #event for message receiving. None by default
 
     #-----------------------------------------------
     #Constructor. Starts message received thread and registers callbacks
@@ -51,13 +54,10 @@ class IrRxDevice(InputDevice):
 
         #get ready to receive data
         self.ClearMessage()
-
-        #register callback for GPIO
-        GPIO.add_event_detect(pin,GPIO.BOTH, callback=self.IrRxSignalReceived)
     #-----------------------------------------------
     #Returns if message receiving is timed out
     def IsMessageTimedOut(self):
-        return len(self.buffer) and self.Diff()>self.message_timeout
+        return len(self.buffer) and self.Diff()>(self.message_timeout/100)
     #-----------------------------------------------
     #Message receiving thread calls this method.
     #Method then decodes received message and clears it
@@ -73,7 +73,7 @@ class IrRxDevice(InputDevice):
     #-----------------------------------------------
     #Decode received message and raise events
     def DecodeMessage(self):
-        print("buffer ("+str(len(self.buffer))+": "+ str(self.buffer))
+        #print("buffer ("+str(len(self.buffer))+": "+ str(self.buffer))
                 
         #join subsequent highs and lows
         i = 0
@@ -86,17 +86,20 @@ class IrRxDevice(InputDevice):
             else:
                 i+=1
 
-        print("buffer ("+str(len(self.buffer))+": "+ str(self.buffer))
+        if (len(self.buffer)<self.min_msg_length):
+            return
+
+        #print("buffer ("+str(len(self.buffer))+": "+ str(self.buffer))
 
         #now convert signal chunks into 0s and 1s with transmission bitrate
         result = []    
         for item in self.buffer:
             n = int(round(abs(item)/self.bitrate))
 
-            if (n>=4):#new message has started - raise event with previous message contents and start new message
+            if (n>=self.start_bits_length):#new message has started - raise event with previous message contents and start new message
                 if (len(result)):
                     self.RaiseMessageReceived(result)
-                result.clear()#start new message
+                result = []#start new message
 
             #convert signal to 0 or 1 depending if it was high or low
             for i in range(0,n):
@@ -119,10 +122,13 @@ class IrRxDevice(InputDevice):
     #------------------------------------------
     #Add received signal to message bufer
     def RegisterSignal(self, channel):
-        if (self.lastirrx == 0):
-            diff = self.bitrate                 #if this is a first signal in message - add bitrate as timespan
-        else:
+        diff = self.bitrate                     #if this is a first signal in message - add bitrate as timespan
+        
+        if (self.lastirrx != 0):
             diff = self.Diff()                  #otherise add time since previous signal
+        else:
+            self.lastirrx = self.Time()         #skip first bit received
+            return
        
         self.lastirrx = self.Time()
         
@@ -131,7 +137,7 @@ class IrRxDevice(InputDevice):
         self.last_state = state
     #------------------------------------------
     #Event handler for GPIO signal event
-    def IrRxSignalReceived(self,channel):      
+    def OnMessageReceived(self,channel):
         self.RegisterSignal(channel)
     #------------------------------------------
     #Stop method to stop message receiving thread
@@ -140,15 +146,16 @@ class IrRxDevice(InputDevice):
     #------------------------------------------
     #Destructor
     def __del__(self):
+        InputDevice.__del__(self)
         self.Stop()
     #-----------------------------------------------
     #Utility method to detect precise time
     def Time(self):
-        return Time.clock()
+        return Time.time()+Time.clock()
     #-----------------------------------------------
     #Utility method to detect time diff from last sample
     def Diff(self):
-        return abs(Time.clock()-self.lastirrx);
+        return abs(self.Time()-self.lastirrx);
     #-----------------------------------------------
     #Utility method to detect sign of an int
     def Sign(self, x):

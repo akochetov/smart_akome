@@ -31,10 +31,11 @@ irrxpin = 4
 
 irrx = GPIO.IrRxDevice(irrxpin)
 irrx.MessageReceived = IrMessageReceived
-    
-try:      
+  
+try:
     input("Ir Rx is ready. Press Enter to exit.\n")
 except:
     s=0
 
 irrx.Stop()
+
