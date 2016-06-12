@@ -1,0 +1,3 @@
+[
+{"ID":1,"Name":"AppServer 1","App":"python -u msg_queue.py"}
+]

@@ -1,0 +1,32 @@
+﻿<header>
+    <h1>@ViewBag.Title</h1>
+</header>
+
+@functions{
+    public string GetAntiForgeryToken()
+    {
+        string cookieToken, formToken;
+        AntiForgery.GetTokens(null, out cookieToken, out formToken);
+        return cookieToken + ":" + formToken;                
+    }
+}
+
+<div id="main-content">
+    <input id="antiForgeryToken" type="hidden" value="@GetAntiForgeryToken()" />
+    <section id="devices">          
+            <ul data-bind="foreach: devices, visible: devices().length > 0">                
+                <li id="device" data-bind="visible: CommunicationMethod == CommunicationMethodReceive">
+                    <span data-bind="text: Name"></span>
+                    <ul data-bind="foreach: signals, visible: signals().length > 0">
+                        <li>
+                            <a href="#" data-bind="click: triggerSignal">
+                            <span data-bind="text: Name"></span>
+                            </a>
+                            <p class="error" data-bind="visible: errorMessage, text: errorMessage"></p>
+                        </li>                        
+                    </ul>
+                    <p class="error" data-bind="visible: errorMessage, text: errorMessage"></p>
+                </li>
+            </ul>
+    </section>
+</div>
