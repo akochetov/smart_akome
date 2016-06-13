@@ -11,6 +11,8 @@ namespace AppServer.Models
     /// </summary>
     public class Device : IEntityBase
     {
+        private List<Signal> _signals = new List<Signal>();
+
         [Required]
         public int ID { get; set; }
         [Required]
@@ -18,7 +20,7 @@ namespace AppServer.Models
         [Required]
         public DeviceCommunicationMethod CommunicationMethod { get; set; }
 
-        public List<Signal> Signals { get; set; }
+        public List<Signal> Signals { get { return _signals; } }
 
         public override bool Equals(object obj)
         {
@@ -27,7 +29,7 @@ namespace AppServer.Models
 
             Device device = obj as Device;
             if (device == null)
-                throw new InvalidCastException("Object of Device type is expected. Type given: "+obj.GetType().ToString());
+                return base.Equals(obj);
 
             return device.ID == ID;
         }

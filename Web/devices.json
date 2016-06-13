@@ -1,0 +1,71 @@
+[
+  {
+    "ID": 1,
+    "Name": "Light Switch",
+    "CommunicationMethod": 2,
+    "Signals": [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 1,
+        "Device": null
+      },
+      {
+        "ID": 2,
+        "Name": "Off",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 1,
+        "Device": null
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "Name": "Speakers",
+    "CommunicationMethod": 2,
+    "Signals": [
+      {
+        "ID": 3,
+        "Name": "On/Off",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 2,
+        "Device": null
+      },
+      {
+        "ID": 4,
+        "Name": "Volume Down",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 2,
+        "Device": null
+      },
+      {
+        "ID": 5,
+        "Name": "Volume Up",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 2,
+        "Device": null
+      }
+    ]
+  },
+  {
+    "ID": 3,
+    "Name": "Motion Sensor",
+    "CommunicationMethod": 1,
+    "Signals": [
+      {
+        "ID": 6,
+        "Name": "Motion Detectedf",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 3,
+        "Device": null
+      }
+    ]
+  }
+]

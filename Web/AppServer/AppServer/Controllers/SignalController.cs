@@ -16,14 +16,14 @@ namespace AppServer.Controllers
     [ValidateHttpAntiForgeryToken]
     public class SignalController : ApiController
     {
-        private DeviceSignalContext db = new DeviceSignalContext();
+        private DeviceSignalContext db = DeviceSignalContext.Instance;
 
         // GET api/signals
-        public IEnumerable<SignalDTO> Get()
+        public IEnumerable<Signal> Get()
         {
-            return db.Signals.Select(signal => new SignalDTO(signal));
+            return db.Signals;
         }
-
+/*
         // POST api/signals
         [ValidateHttpAntiForgeryToken]
         public HttpResponseMessage Post([FromBody]SignalDTO signalDTO)
@@ -108,5 +108,6 @@ namespace AppServer.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+ */
     }
 }

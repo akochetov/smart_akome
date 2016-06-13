@@ -78,7 +78,7 @@ window.App.datacontext = (function () {
     function triggerSignal(signal) {
         clearErrorMessage(signal);
         
-        return ajaxRequest("post", signalUrl(), signal)
+        return ajaxRequest("post", signalUrl(), signal)            
             .done(function (result) {
                 signal.ID = signal.ID;             
             })
@@ -89,7 +89,7 @@ window.App.datacontext = (function () {
 
     // Private
     function clearErrorMessage(entity) { entity.errorMessage(null); }    
-    function ajaxRequest(type, url, data, dataType) { // Ajax helper
+    function ajaxRequest(type, url, data, dataType) { // Ajax helper        
         var options = {
             dataType: dataType || "json",
             contentType: "application/json",

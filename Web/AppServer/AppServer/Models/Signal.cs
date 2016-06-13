@@ -12,15 +12,11 @@ namespace AppServer.Models
     /// </summary>
     public class Signal : IEntityBase
     {
-        [Required]
         public int ID { get; set; }
-        [Required]
         public string Name { get; set; }
         public SignalDirection SignalDirection { get; set; }
         public short[] Pattern { get; set; }
 
-        [ForeignKey("Device")]
         public int DeviceID { get; set; }
-        public Device Device { get; set; }
     }
 }

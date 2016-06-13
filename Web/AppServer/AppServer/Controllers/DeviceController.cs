@@ -15,27 +15,27 @@ namespace AppServer.Controllers
     //[Authorize]
     public class DeviceController : ApiController
     {
-        private DeviceSignalContext db = new DeviceSignalContext();
+        private DeviceSignalContext db = DeviceSignalContext.Instance;
 
         // GET api/devices
-        public IEnumerable<DeviceDTO> Get()
+        public IEnumerable<Device> Get()
         {
-            IEnumerable<DeviceDTO> result = db.Devices.Include("Signals").AsEnumerable().Select(device => new DeviceDTO(device));
+            IEnumerable<Device> result = db.Devices;
             return result;
         }
 
         // GET api/devices/5
-        public DeviceDTO Get(int id)
+        public Device Get(int id)
         {
-            Device device = db.Devices.Find(id);
+            Device device = db.Devices.Find(d => d.ID == id);
             if (device == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return new DeviceDTO(device);
+            return device;
         }
-
+/*
         // POST api/devices
         [ValidateHttpAntiForgeryToken]
         public HttpResponseMessage Post([FromBody]DeviceDTO deviceDTO)
@@ -111,5 +111,6 @@ namespace AppServer.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+*/
     }
 }

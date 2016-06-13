@@ -13,9 +13,5 @@ namespace AppServer.Controllers
             return View();
         }
 
-        public ActionResult DbSetup()
-        {
-            return View();
-        }
     }
 }

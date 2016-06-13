@@ -18,18 +18,18 @@ using RabbitMQ.Client;
 namespace AppServer.Controllers
 {
     //[Authorize]
-    [ValidateHttpAntiForgeryToken]
+    //[ValidateHttpAntiForgeryToken]
     public class SignalTriggerController : ApiController
     {
         // POST api/signaltrigger
-        public HttpResponseMessage Post([FromBody]SignalDTO signalDTO)
+        public HttpResponseMessage Post([FromBody]Signal signal)
         {
             //trigger signal here
 
-            PostSignalToQueue(signalDTO.ToEntity());
+            PostSignalToQueue(signal);
 
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Accepted, signalDTO);
-            response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = signalDTO.ID }));
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Accepted, signal);
+            response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = signal.ID }));
             return response;
         }
 
