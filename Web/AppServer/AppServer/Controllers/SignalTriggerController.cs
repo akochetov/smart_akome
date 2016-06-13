@@ -35,7 +35,7 @@ namespace AppServer.Controllers
 
         private void PostSignalToQueue(Signal signal)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { HostName = "192.168.0.100",UserName="pi",Password="pi"};
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
