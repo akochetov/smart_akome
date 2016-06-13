@@ -18,7 +18,7 @@ using RabbitMQ.Client;
 namespace AppServer.Controllers
 {
     //[Authorize]
-    //[ValidateHttpAntiForgeryToken]
+    [ValidateHttpAntiForgeryToken]
     public class SignalTriggerController : ApiController
     {
         // POST api/signaltrigger
