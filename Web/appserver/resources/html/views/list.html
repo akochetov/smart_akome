@@ -1,0 +1,28 @@
+<h2>Devices</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Signals
+        </th>
+    </tr>
+    <tr class="" ng-repeat="device in devices">
+        <td>
+        	{{device.ID}}
+        </td>
+        <td>
+            {{device.Name}}
+        </td>
+        <td>
+        	<span class="" ng-repeat="signal in device.Signals">
+				<a class="btn btn-primary pull-left" href="" style="margin-left: 5px" ng-click="triggerSignal(signal)"><i class="icon-plus-sign icon-white"></i>{{signal.Name}}</a>
+        	</span>
+        </td>
+    </tr>
+</table>

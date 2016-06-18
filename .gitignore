@@ -45,3 +45,23 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# DLLs
+*.dll
+
+# Phyton compiled files
+*.pyc
+
+# VS debug files and VS temp files
+*.pdb
+*.suo
+*.user
+*TemporaryGeneratedFile*.cs
+*.xml
+
+# Cache files
+*.cache
+
+# java folders
+target/
+.metadata/
