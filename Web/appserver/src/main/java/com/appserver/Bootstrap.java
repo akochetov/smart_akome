@@ -2,7 +2,7 @@ package com.appserver;
 
 import static spark.Spark.setIpAddress;
 import static spark.Spark.setPort;
-import static spark.SparkBase.staticFileLocation;
+import static spark.SparkBase.externalStaticFileLocation;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class Bootstrap {
     	
     	setIpAddress(config.getProperty("ip_address"));
         setPort(Integer.parseInt(config.getProperty("port")));
-        staticFileLocation(config.getProperty("folder"));
+        externalStaticFileLocation(config.getProperty("root"));
     	
         //setup routes and controllers
         DbContext dbContext = new DbContext(config.getProperty("db_file"));
