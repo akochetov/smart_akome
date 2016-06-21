@@ -1,28 +1,23 @@
-<h2>Devices</h2>
-
-<table class="table table-hover">
-    <tr>
-        <th>
-            #
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Signals
-        </th>
-    </tr>
-    <tr class="" ng-repeat="device in devices">
-        <td>
-        	{{device.ID}}
-        </td>
-        <td>
-            {{device.Name}}
-        </td>
-        <td>
-        	<span class="" ng-repeat="signal in device.Signals">
-				<a class="btn btn-primary pull-left" href="" style="margin-left: 5px" ng-click="triggerSignal(signal)"><i class="icon-plus-sign icon-white"></i>{{signal.Name}}</a>
-        	</span>
-        </td>
-    </tr>
-</table>
+<h1>Devices</h1>
+<div class="row" style="">
+    <div class="col-sm-6 col-md-6 col-lg-6" style="white-space: nowrap;" ng-repeat="device in devices" ng-hide="device.CommunicationMethod == 1" >
+		<table>
+			<tr>
+				<td style="width:50px">
+					<img src="/img/{{device.Icon}}" style="-webkit-filter: invert(1);filter: invert(1);margin: 25px 15px 15px 15px; width:50px; height:50px;"/>
+            	</td>
+            	<td>
+            		<h5>{{device.Name}}</h5>
+       				<div class="btn-group" ng-repeat="signal in device.Signals">	
+					<a class="btn btn-default" style="margin-right: 5px; min-width: 50px;" ng-click="triggerSignal(signal)">
+					<i class="fa fa-{{signal.Icon}}" aria-hidden="true"></i>
+					<span class="hidden-xs">
+					{{signal.Name}}
+					</span>
+					</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+    </div>
+</div>

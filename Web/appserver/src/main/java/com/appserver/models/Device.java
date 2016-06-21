@@ -11,6 +11,7 @@ public class Device extends EntityBase
 	private int ID;
 	private String Name;
 	private DeviceCommunicationMethod CommunicationMethod;
+	private String Icon;
 	private List<Signal> Signals = new ArrayList<Signal>();
 
     public int getID() { return ID; }
@@ -18,6 +19,8 @@ public class Device extends EntityBase
 
     public String getName() { return Name; }
 	public void setName(String name) { Name = name; }
+	
+	public String getIcon() { return Icon; }
 	
 	public DeviceCommunicationMethod getCommunicationMethod() {	return CommunicationMethod;	}
 	public void setCommunicationMethod(DeviceCommunicationMethod communicationMethod) {	CommunicationMethod = communicationMethod; }

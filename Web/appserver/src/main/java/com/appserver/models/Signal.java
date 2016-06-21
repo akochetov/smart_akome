@@ -7,10 +7,12 @@ public class Signal extends EntityBase
 {
 	private int ID;
 	private int DeviceID;
-	private short[] Pins;
+	
 	private String Name;
 	private SignalDirection signalDirection;
 	private short[] Pattern;
+	
+	private String Icon;
 
     public int getID() { return ID; }
 	public void setID(int id) { ID = id; }
@@ -26,7 +28,7 @@ public class Signal extends EntityBase
 	public void setSignalDirection(SignalDirection signalDirection) {	this.signalDirection = signalDirection; }
 	
 	public short[] getPattern() { return Pattern;}
-	public short[] getPins() { return Pins;}
+	public String getIcon() { return Icon;}
 	
 	public Signal(int id)
 	{

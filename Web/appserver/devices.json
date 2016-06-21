@@ -1,8 +1,9 @@
 [
   {
     "ID": 1,
-    "Name": "Light Switch",
+    "Name": "Bedroom light",
     "CommunicationMethod": 2,
+    "Icon": "rest.png",
     "Signals": [
       {
         "ID": 1,
@@ -10,7 +11,8 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 1,
-        "Device": null
+        "Device": null,
+        "Icon": "lightbulb-o"
       },
       {
         "ID": 2,
@@ -18,7 +20,60 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 1,
-        "Device": null
+        "Device": null,
+        "Icon": "remove"
+      }
+    ]
+  },
+  {
+    "ID": 11,
+    "Name": "Livingroom light",
+    "CommunicationMethod": 2,
+    "Icon": "sofa.png",
+    "Signals": [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 11,
+        "Device": null,
+        "Icon": "lightbulb-o"
+      },
+      {
+        "ID": 2,
+        "Name": "Off",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 11,
+        "Device": null,
+        "Icon": "remove"
+      }
+    ]
+  },
+   {
+    "ID": 21,
+    "Name": "Desk light",
+    "CommunicationMethod": 2,
+    "Icon": "table.png",
+    "Signals": [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 21,
+        "Device": null,
+        "Icon": "lightbulb-o"
+      },
+      {
+        "ID": 2,
+        "Name": "Off",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 21,
+        "Device": null,
+        "Icon": "remove"
       }
     ]
   },
@@ -26,6 +81,7 @@
     "ID": 2,
     "Name": "Speakers",
     "CommunicationMethod": 2,
+    "Icon": "speaker-1.png",
     "Signals": [
       {
         "ID": 3,
@@ -33,38 +89,53 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 2,
-        "Device": null
+        "Device": null,
+        "Icon":"power-off"
       },
       {
         "ID": 4,
-        "Name": "Volume Down",
+        "Name": "Vol.Dwn",
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 2,
-        "Device": null
+        "Device": null,
+        "Icon":"volume-down"
       },
       {
         "ID": 5,
-        "Name": "Volume Up",
+        "Name": "Vol.Up",
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 2,
-        "Device": null
+        "Device": null,
+        "Icon":"volume-up"
+      }
+      ,
+      {
+        "ID": 6,
+        "Name": "Mute",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 2,
+        "Device": null,
+        "Icon":"volume-off"
       }
     ]
   },
   {
     "ID": 3,
     "Name": "Motion Sensor",
-    "CommunicationMethod": 1,
+    "CommunicationMethod": 3,
+    "Icon": "camera.png",
     "Signals": [
       {
         "ID": 6,
-        "Name": "Motion Detectedf",
+        "Name": "Motion Detected",
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 3,
-        "Device": null
+        "Device": null,
+        "Icon":"child"
       }
     ]
   }
