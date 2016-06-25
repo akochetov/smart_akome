@@ -87,7 +87,7 @@
         "ID": 3,
         "Name": "On/Off",
         "SignalDirection": 1,
-        "Pattern": null,
+        "Pattern": [75,69,89,95,48],
         "DeviceID": 2,
         "Device": null,
         "Icon":"power-off"
@@ -96,7 +96,7 @@
         "ID": 4,
         "Name": "Vol.Dwn",
         "SignalDirection": 1,
-        "Pattern": null,
+        "Pattern": [75, 69, 89, 95, 86, 79, 76, 85, 77, 69, 85, 80],
         "DeviceID": 2,
         "Device": null,
         "Icon":"volume-down"
@@ -105,7 +105,7 @@
         "ID": 5,
         "Name": "Vol.Up",
         "SignalDirection": 1,
-        "Pattern": null,
+        "Pattern": [75, 69, 89, 95, 86, 79, 76, 85, 77, 69, 68, 79, 87, 78 ],
         "DeviceID": 2,
         "Device": null,
         "Icon":"volume-up"
@@ -115,7 +115,7 @@
         "ID": 6,
         "Name": "Mute",
         "SignalDirection": 1,
-        "Pattern": null,
+        "Pattern": [75, 69, 89, 95, 49],
         "DeviceID": 2,
         "Device": null,
         "Icon":"volume-off"
