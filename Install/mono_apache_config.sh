@@ -22,9 +22,11 @@ sudo mkdir -p $DIR
 echo "Setting current user permissions for "$DIR...
 sudo chown -R $USER:$USER $DIR
 
-#provide read permissions to /var/www
+#provide read permissions to /var/www and create /etc/mono/registry
 echo "Setting read permissions for /var/www..."
 sudo chmod -R 755 /var/www
+sudo mkdir /etc/mono/registry
+sudo chmod uog+rw /etc/mono/registry
 
 #create config files
 echo "Creating config files..."

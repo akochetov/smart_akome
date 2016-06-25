@@ -21,20 +21,16 @@ class Signal():
     DeviceID = 0
     Device = ""
 
-credentials = pika.PlainCredentials('pi','pi')
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.100', credentials=credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
 
 channel.queue_declare(queue='smart_akome', durable = False, exclusive = False, auto_delete = False)
 
 def callback(ch, method, properties, body):
-    print(body.decode())
-    #loader = io.StringIO(body.decode())
-    #signal = json.load(loader)
+    print(body.decode())    
     
 channel.basic_consume(callback,
                       queue='smart_akome',
                       no_ack=True)
 
-print('ping')
 channel.start_consuming()

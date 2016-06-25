@@ -6,5 +6,5 @@ class GPIODevice():
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         
-    def __del__():
+    def __del__(self):
         GPIO.cleanup()

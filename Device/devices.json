@@ -1,3 +1,14 @@
 [
-{"ID":1,"Name":"AppServer 1","App":"python -u msg_queue.py"}
+  {
+    "ID": 0,
+    "Name": "MessageQueue",
+    "CommunicationMethod": 1,
+    "App": "python -u msg_queue.py"
+  },
+  {
+    "ID": 2,
+    "Name": "Speakers",
+    "CommunicationMethod": 2,
+    "App": "python -u speakers.py"
+  }
 ]
