@@ -56,7 +56,7 @@ class DeviceDispatcher():
     
     def UpdateDevices(self):
         del self._devices[:]
-        with open('devices.json', 'r') as f:
+        with open('../Web/appserver/devices.json', 'r') as f:
             ln = f.read()
             devices = json.loads(ln)
             for device in devices:                
@@ -67,13 +67,13 @@ class DeviceDispatcher():
 
         for device in self._devices:
             if device.ID == signal.DeviceID:
-                print("Starting signal app: ID - "+str(device.ID)+" , app path - "+device.App+" "+data)
-                subprocess.Popen(device.App+" '"+data+"'",shell=True)
+                print("Starting signal app: ID - "+str(device.ID)+" , app path - "+device.App+" "+str(device.Pin)+" '"+data+"'")
+                subprocess.Popen(device.App+" "+str(device.Pin)+" '"+data+"'",shell=True)
 
     def UpdateThreads(self):
         self.KillThreads()
-        for device in self._devices:
-            if device.CommunicationMethod == Device.CommunicationMethod_Send or device.CommunicationMethod == Device.CommunicationMethod_Both:
+        for device in self._devices:            
+            if not device.App == '' and (device.CommunicationMethod == Device.CommunicationMethod_Send or device.CommunicationMethod == Device.CommunicationMethod_Both):
                 print("Starting device: ID - "+str(device.ID)+", app path - "+device.App)
                 thread = DeviceThread(device.App)
                 thread.set_data_callback(self.InputFromDevice)

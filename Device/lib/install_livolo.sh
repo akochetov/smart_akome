@@ -1,9 +1,6 @@
-#get livolo
-git clone https://github.com/platenspeler/LamPI-2.0/tree/master/transmitters/livolo
-
 #build livolo
 cd livolo
-./build
+sudo python setup.py install
 
 #get wiringPi
 git clone git://git.drogon.net/wiringPi

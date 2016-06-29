@@ -6,4 +6,4 @@ setup(name             = 'livolo',
       description      = 'A module to control livolo light switches over 433 MHz radio channel',
       keywords         = 'livolo 433 MHz',
       url              = '',
-      ext_modules      = [Extension('livolo',['livolo.cpp', 'livolo.h', 'python_wrap.c'])])
+      ext_modules      = [Extension('livolo',sources=['livolo.cpp', 'python_wrap.cpp'],libraries=['wiringPi'],extra_compile_args=['-Wno-write-strings'])])

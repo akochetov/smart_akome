@@ -1,11 +1,11 @@
 from AKO.GPIO._IrTxDevice import *
-import sys
-import json
 
 from device_signal import Signal
+from device_signal import DeviceSignalFactory
 
-print(sys.argv[1])
-signal = Signal(**json.loads(sys.argv[1]))
+#deserialize signal json passed as parameter
+signal = DeviceSignalFactory.signalFromArgs()
+
 irtx = IrTxDevice()
 pattern = list(signal.Pattern)
 

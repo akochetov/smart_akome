@@ -1,3 +1,6 @@
+import sys
+import json
+
 class Signal():
     ID = 0
     Name = ""
@@ -13,3 +16,18 @@ class Signal():
         self.SignalDirection = SignalDirection
         self.DeviceID = DeviceID
         self.Pattern = Pattern
+
+class DeviceSignalFactory():
+    @staticmethod
+    def signalFromJson(jsonString):
+        return Signal(**json.loads(jsonString))
+    @staticmethod
+    def signalFromArgs():
+        if len(sys.argv) < 3:
+            raise ValueError('second parameter must be json put in single qoutes')
+        return DeviceSignalFactory.signalFromJson(sys.argv[2])
+    @staticmethod
+    def pinFromArgs():
+        if len(sys.argv) < 2 or not sys.argv[1].isdigit():
+            raise ValueError('first parameter must be int - pin number')
+        return int(sys.argv[1])
