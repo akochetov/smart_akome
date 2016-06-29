@@ -1,15 +1,26 @@
 [
   {
+    "ID": 0,
+    "Name": "MessageQueue",
+    "CommunicationMethod": 1,
+    "App": "python -u msg_queue.py",
+    "Icon": "",
+    "Signals":[]
+  },
+  {
     "ID": 1,
     "Name": "Bedroom light",
     "CommunicationMethod": 2,
+    "App": "sudo python -u livolo_switch.py",
     "Icon": "rest.png",
-    "Signals": [
+    "Pin": 23,
+    "Signals":
+    [
       {
         "ID": 1,
         "Name": "On",
         "SignalDirection": 1,
-        "Pattern": null,
+        "Pattern": [23783,42,23783,16],
         "DeviceID": 1,
         "Device": null,
         "Icon": "lightbulb-o"
@@ -18,7 +29,7 @@
         "ID": 2,
         "Name": "Off",
         "SignalDirection": 1,
-        "Pattern": null,
+        "Pattern": [23783,42],
         "DeviceID": 1,
         "Device": null,
         "Icon": "remove"
@@ -30,7 +41,8 @@
     "Name": "Livingroom light",
     "CommunicationMethod": 2,
     "Icon": "sofa.png",
-    "Signals": [
+    "Signals":
+    [
       {
         "ID": 1,
         "Name": "On",
@@ -56,7 +68,8 @@
     "Name": "Desk light",
     "CommunicationMethod": 2,
     "Icon": "table.png",
-    "Signals": [
+    "Signals":
+    [
       {
         "ID": 1,
         "Name": "On",
@@ -81,8 +94,10 @@
     "ID": 2,
     "Name": "Speakers",
     "CommunicationMethod": 2,
+    "App": "python -u speakers.py",
     "Icon": "speaker-1.png",
-    "Signals": [
+    "Signals":
+    [
       {
         "ID": 3,
         "Name": "On/Off",
@@ -127,7 +142,8 @@
     "Name": "Motion Sensor",
     "CommunicationMethod": 3,
     "Icon": "camera.png",
-    "Signals": [
+    "Signals":
+    [
       {
         "ID": 6,
         "Name": "Motion Detected",
