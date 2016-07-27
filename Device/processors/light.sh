@@ -1,1 +1,0 @@
-sudo python light.py '{"ID": 23783,"Name": "test","SignalSourceID":-1,"SignalSource":"queue", "SignalDestination": "livolo","CommunicationMethod": 2,"Icon": "rest.png","Settings": {"pin": 23},"Signals":[{"ID": 1,"Name": "On","SignalDirection": 1,"Pattern": [23783,42],"DeviceID": 23783,"Icon": "lightbulb-o" }]}'

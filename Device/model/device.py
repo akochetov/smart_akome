@@ -18,9 +18,9 @@ class Device():
     SignalDestinationID = 0
     CommunicationMethod = 0
     Signals = []
-    Settings = []
+    Settings = {}
     
-    def __init__(self,ID,Name='',Processor='',Icon='',Signals=[],Settings=[],CommunicationMethod=0,SignalSource = '',SignalDestination = '',SignalSourceID = 0,SignalDestinationID = 0):
+    def __init__(self,ID,Name='',Processor='',Icon='',Signals=[],Settings={},CommunicationMethod=0,SignalSource = '',SignalDestination = '',SignalSourceID = 0,SignalDestinationID = 0):
         self.ID = ID
         self.Name = Name
         self.Processor = Processor
@@ -29,7 +29,7 @@ class Device():
 
         #read signals json
         self.Signals = []
-        self.Settings = []
+        self.Settings = {}
         for signal in Signals:
             self.Signals.append(Signal(**signal))
 

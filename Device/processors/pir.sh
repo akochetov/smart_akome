@@ -1,1 +1,0 @@
-sudo python pir.py '{"ID":2,"Name":"PIR","CommandDestination":"queue","SignalSource":"inputdevice","Settings":{"pin":18,"light_sensor_pin":27,"timeout":60,"tries":3,"command_on":"On","command_off":"Off","light_devices":[23783,12]},"CommunicationMethod": 2,"Signals":[]}'

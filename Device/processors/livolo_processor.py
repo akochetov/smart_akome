@@ -9,6 +9,8 @@ class LivoloProcessor(BaseProcessor):
 livolo = LivoloProcessor()
 livolo.start()
 
+print("Processor started for device: "+str(livolo._device.ID))
+
 while True:
     time.sleep(1)
 

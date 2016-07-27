@@ -17,7 +17,7 @@ case "$1" in
 		cd {dir}/../Web/appserver/target/
 		nohup java -jar appserver.jar >/dev/null 2>&1 &
 		cd {dir}/../Device/
-		nohup stdbuf -oL python dispatcher.py >dispatcher.log 2>&1 &
+		nohup stdbuf -oL python dispatcher.py >./logs/dispatcher.log 2>&1 &
 		;;
 	stop)
 		sudo killall java

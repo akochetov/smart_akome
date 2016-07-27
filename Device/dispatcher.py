@@ -17,7 +17,7 @@ def log(message):
 class ProcessorPathBuilder():   
     @staticmethod
     def getPath(device):
-        return "sudo python -u ./processors/"+device.Processor+".py '"+DeviceFactory.toJson(device)+"' >"+device.Processor+str(device.ID)+".log 2>&1 &"
+        return "sudo python -u ./processors/"+device.Processor+".py '"+DeviceFactory.toJson(device)+"' >./logs/"+device.Processor+"_"+str(device.ID)+".log 2>&1 &"
 
 class DeviceThread(threading.Thread):
     def __init__(self, app_path):

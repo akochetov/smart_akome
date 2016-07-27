@@ -16,6 +16,7 @@
     "SignalSource": "queue",
     "SignalDestination": "queue",
     "SignalDestinationID": -1,
+    "Processor": "light_processor",
     "Icon": "rest.png",
     "Signals":
     [
@@ -136,7 +137,11 @@
     "ID": 3,
     "Name": "Motion Sensor",
     "CommunicationMethod": 3,
+    "SignalSource": "inputdevice",
+    "SignalDestination": "queue",
+    "Processor": "pir_processor",
     "Icon": "camera.png",
+    "Settings": {"pin":18,"light_devices":[23783],"light_sensor_pin":27,"command_on":"On","command_off":"Off","tries":3,"timeout":60},
     "Signals":
     [
       {
