@@ -1,0 +1,32 @@
+#!/bin/bash
+# /etc/init.d/smart_akome
+
+### BEGIN INIT INFO
+# Provides:          smart_akome
+# Required-Start:	$remote_fs $network rabbitmq-server
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Description:       This service is used to manage a smart_akome
+### END INIT INFO
+
+case "$1" in
+	start)
+		sudo killall lircd
+		sudo lircd -d /dev/lirc0 /home/pi/lircd.conf
+		cd {dir}/../Web/appserver/target/
+		nohup java -jar appserver.jar >/dev/null 2>&1 &
+		cd {dir}/../Device/
+		nohup stdbuf -oL python dispatcher.py >dispatcher.log 2>&1 &
+		;;
+	stop)
+		sudo killall java
+		sudo killall python
+		sudo killall lircd
+		;;
+	*)
+		exit 1
+		;;
+esac
+
+exit 0

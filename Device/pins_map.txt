@@ -1,0 +1,9 @@
+color	wiringPI	GPIO	Assignment
+blue	0		17	433 MHz receiver. power from 5v
+white	1		18	PIR 1 (wire). power from 5v
+green	2		27	Light sensor 1. power from 5v
+	3		22	Light sensor 2. power from 3v
+yellow	4		23	433 MHz transmitter. power from 5v
+	5		24	IR sensor (rx)
+	6		25	Temperature sensor
+	7		4	IR emitter

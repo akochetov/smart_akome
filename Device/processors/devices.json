@@ -1,0 +1,160 @@
+[
+  {
+    "ID": 23783,
+    "Name": "Bedroom light",
+    "CommandSource": "queue",
+    "SignalDestination": "livolo",
+    "CommunicationMethod": 2,
+    "Icon": "rest.png",
+    "Processor": "light",
+    "Settings": {"pin":"23"},
+    "Signals":
+    [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [23783,42,23783,8],
+        "DeviceID": 23783,
+        "Icon": "lightbulb-o"
+      },
+      {
+        "ID": 2,
+        "Name": "Off",
+        "SignalDirection": 1,
+        "Pattern": [23783,42],
+        "DeviceID": 23783,
+        "Icon": "remove"
+      }
+    ]
+  },
+ {
+    "ID": 3,
+    "Name": "Motion Sensor at Entrance",
+    "CommandSource": null,
+    "CommandDestination": "queue",
+    "SignalDestination": null,
+    "CommunicationMethod": 3,
+    "Icon": "camera.png",
+    "Processor": "pir",
+    "Signals":
+    [
+      {
+        "ID": 6,
+        "Name": "Motion Detected",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 3,
+        "Device": null,
+        "Icon":"child"
+      }
+    ]
+  },
+  {
+    "ID": 11,
+    "Name": "Livingroom light",
+    "CommandSource": null,
+    "SignalDestination": null,
+    "CommunicationMethod": 2,
+    "Icon": "sofa.png",
+    "Signals":
+    [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 11,
+        "Device": null,
+        "Icon": "lightbulb-o"
+      },
+      {
+        "ID": 2,
+        "Name": "Off",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 11,
+        "Device": null,
+        "Icon": "remove"
+      }
+    ]
+  },
+   {
+    "ID": 21,
+    "Name": "Desk light",
+    "CommandSource": null,
+    "SignalDestination": null,
+    "CommunicationMethod": 2,
+    "Icon": "table.png",
+    "Signals":
+    [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 21,
+        "Device": null,
+        "Icon": "lightbulb-o"
+      },
+      {
+        "ID": 2,
+        "Name": "Off",
+        "SignalDirection": 1,
+        "Pattern": null,
+        "DeviceID": 21,
+        "Device": null,
+        "Icon": "remove"
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "Name": "Speakers",
+    "SignalSource": "queue",
+    "SignalDestination": "speakers",
+    "CommunicationMethod": 2,
+    "Icon": "speaker-1.png",
+    "Processor": "speakers",
+    "Signals":
+    [
+      {
+        "ID": 3,
+        "Name": "On/Off",
+        "SignalDirection": 1,
+        "Pattern": [75,69,89,95,48],
+        "DeviceID": 2,
+        "Device": null,
+        "Icon":"power-off"
+      },
+      {
+        "ID": 4,
+        "Name": "Vol.Dwn",
+        "SignalDirection": 1,
+        "Pattern": [75, 69, 89, 95, 86, 79, 76, 85, 77, 69, 68, 79, 87, 78 ],
+        "DeviceID": 2,
+        "Device": null,
+        "Icon":"volume-down"
+      },
+      {
+        "ID": 5,
+        "Name": "Vol.Up",
+        "SignalDirection": 1,
+        "Pattern": [75, 69, 89, 95, 86, 79, 76, 85, 77, 69, 85, 80],
+        "DeviceID": 2,
+        "Device": null,
+        "Icon":"volume-up"
+      }
+      ,
+      {
+        "ID": 6,
+        "Name": "Mute",
+        "SignalDirection": 1,
+        "Pattern": [75, 69, 89, 95, 49],
+        "DeviceID": 2,
+        "Device": null,
+        "Icon":"volume-off"
+      }
+    ]
+  }
+]
