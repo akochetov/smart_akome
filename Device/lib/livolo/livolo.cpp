@@ -34,7 +34,7 @@
 #include <arpa/inet.h>
 #include "livolo.h"
 
-#define REPEATS 100
+#define REPEATS 150
 
 // Global Variables
 //
@@ -50,9 +50,9 @@ int fflg = 0;										// Fake flag, for debugging. Init to false. If true, prin
 // I found the timing parameters below to be VERY VERY critical
 // Only a few uSecs extra will make the switch fail.
 //
-int p_short = 110;									// 110 works quite OK
-int p_long = 290;									// 300 works quite OK
-int p_start = 520;									// 520 works quite OK
+int p_short = 150;									// 110 works quite OK
+int p_long = 300;									// 290-310 works quite OK
+int p_start = 500;									// 520 works quite OK
 
 Livolo::Livolo(unsigned char pin)
 {
@@ -120,24 +120,24 @@ void Livolo::selectPulse(unsigned char inBit) {
 
 
     switch (inBit) {
-    case 0: 
+    	case 0: 
         if (high == true) {   						// if current pulse should be high, send High Zero
-          sendPulse(2); 
-		  sendPulse(4);
+		sendPulse(2); 
+		sendPulse(4);
         } else {              						// else send Low Zero
-          sendPulse(4);
-		  sendPulse(2);
+ 		sendPulse(4);
+		sendPulse(2);
         }
-      break;
+	break;
 
-      case 1:                						// if current pulse should be high, send High One
+	case 1:                						// if current pulse should be high, send High One
         if (high == true) {
-          sendPulse(3);
+		sendPulse(3);
         } else {             						// else send Low One
-          sendPulse(5);
+		sendPulse(5);
         }
         high=!high; 								// invert next pulse
-      break; 
+	break; 
     }
 
 }

@@ -1,19 +1,29 @@
 import io
 import json
+import datetime
+import time
 
 import subprocess
 
 import threading
 
-from device import Device
-from device_signal import Signal
+from model.device import Device
+from model.device import DeviceFactory
+from model.device_signal import Signal
+
+def log(message):
+    print "%s: %s" % (str(datetime.datetime.now()),message)
+
+class ProcessorPathBuilder():   
+    @staticmethod
+    def getPath(device):
+        return "sudo python -u ./processors/"+device.Processor+".py '"+DeviceFactory.toJson(device)+"' >"+device.Processor+str(device.ID)+".log 2>&1 &"
 
 class DeviceThread(threading.Thread):
     def __init__(self, app_path):
         threading.Thread.__init__(self)
         self._app_path = app_path
         self._process = None
-        self._data_callback = None
     
     def run(self):
         # Create the subprocess, redirect the standard output into a pipe
@@ -22,6 +32,7 @@ class DeviceThread(threading.Thread):
                     stdin=subprocess.PIPE,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE)
+
         while True:
             try:
                 # Read one line of output
@@ -31,10 +42,7 @@ class DeviceThread(threading.Thread):
                 if not data:
                     break
                 line = data.decode('utf-8').rstrip()
-                print("input received: "+line)
-                
-                if (not self._data_callback is None):
-                    self._data_callback(line)
+                log(line)                
             except:
                 break
         
@@ -42,9 +50,6 @@ class DeviceThread(threading.Thread):
         if (self._process != None):        
             self._process.kill()          
             self._process = None
-
-    def set_data_callback(self, func):
-        self._data_callback = func
 
 class DeviceDispatcher():
     _devices = []
@@ -61,22 +66,14 @@ class DeviceDispatcher():
             devices = json.loads(ln)
             for device in devices:                
                 self._devices.append(Device(**device))
-
-    def InputFromDevice(self, data):
-        signal = Signal(**json.loads(data))
-
-        for device in self._devices:
-            if device.ID == signal.DeviceID:
-                print("Starting signal app: ID - "+str(device.ID)+" , app path - "+device.App+" "+str(device.Pin)+" '"+data+"'")
-                subprocess.Popen(device.App+" "+str(device.Pin)+" '"+data+"'",shell=True)
-
-    def UpdateThreads(self):
+    
+    def UpdateThreads(self):     
         self.KillThreads()
-        for device in self._devices:            
-            if not device.App == '' and (device.CommunicationMethod == Device.CommunicationMethod_Send or device.CommunicationMethod == Device.CommunicationMethod_Both):
-                print("Starting device: ID - "+str(device.ID)+", app path - "+device.App)
-                thread = DeviceThread(device.App)
-                thread.set_data_callback(self.InputFromDevice)
+        for device in self._devices:
+            if (not device.Processor == ''):
+                app = ProcessorPathBuilder.getPath(device)
+                log("Starting device: ID - %d, app - %s" % (device.ID,app))
+                thread = DeviceThread(app)
                 thread.start()
                 self._threads.append(thread)
             
@@ -90,7 +87,10 @@ class DeviceDispatcher():
         
 dispatcher = DeviceDispatcher()
 
-input('Devices started. To exit press any key\r\n')
+print('Devices started. To exit press Ctrl+C\r\n')
+
+while True:
+    time.sleep(1)
 
 dispatcher.Destroy()
 

@@ -1,28 +1,30 @@
 [
   {
-    "ID": 0,
-    "Name": "MessageQueue",
+    "ID": -1,
+    "Name": "Livolo Radio Transmitter",
     "CommunicationMethod": 1,
-    "App": "python -u msg_queue.py",
-    "Icon": "",
+    "SignalSource": "queue",
+    "SignalDestination": "livolo",
+    "Processor": "livolo_processor",
+    "Settings": {"pin":23},
     "Signals":[]
   },
   {
-    "ID": 1,
+    "ID": 23783,
     "Name": "Bedroom light",
     "CommunicationMethod": 2,
-    "App": "sudo python -u livolo_switch.py",
+    "SignalSource": "queue",
+    "SignalDestination": "queue",
+    "SignalDestinationID": -1,
     "Icon": "rest.png",
-    "Pin": 23,
     "Signals":
     [
       {
         "ID": 1,
         "Name": "On",
         "SignalDirection": 1,
-        "Pattern": [23783,42,23783,16],
-        "DeviceID": 1,
-        "Device": null,
+        "Pattern": [23783,42,23783,8],
+        "DeviceID": 23783,
         "Icon": "lightbulb-o"
       },
       {
@@ -30,8 +32,7 @@
         "Name": "Off",
         "SignalDirection": 1,
         "Pattern": [23783,42],
-        "DeviceID": 1,
-        "Device": null,
+        "DeviceID": 23783,
         "Icon": "remove"
       }
     ]
@@ -49,7 +50,6 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 11,
-        "Device": null,
         "Icon": "lightbulb-o"
       },
       {
@@ -58,7 +58,6 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 11,
-        "Device": null,
         "Icon": "remove"
       }
     ]
@@ -76,7 +75,6 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 21,
-        "Device": null,
         "Icon": "lightbulb-o"
       },
       {
@@ -85,7 +83,6 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 21,
-        "Device": null,
         "Icon": "remove"
       }
     ]
@@ -94,8 +91,10 @@
     "ID": 2,
     "Name": "Speakers",
     "CommunicationMethod": 2,
-    "App": "python -u speakers.py",
     "Icon": "speaker-1.png",
+    "SignalSource": "queue",
+    "SignalDestination": "speakers",
+    "Processor": "speakers_processor",
     "Signals":
     [
       {
@@ -104,7 +103,6 @@
         "SignalDirection": 1,
         "Pattern": [75,69,89,95,48],
         "DeviceID": 2,
-        "Device": null,
         "Icon":"power-off"
       },
       {
@@ -113,7 +111,6 @@
         "SignalDirection": 1,
         "Pattern": [75, 69, 89, 95, 86, 79, 76, 85, 77, 69, 68, 79, 87, 78 ],
         "DeviceID": 2,
-        "Device": null,
         "Icon":"volume-down"
       },
       {
@@ -122,7 +119,6 @@
         "SignalDirection": 1,
         "Pattern": [75, 69, 89, 95, 86, 79, 76, 85, 77, 69, 85, 80],
         "DeviceID": 2,
-        "Device": null,
         "Icon":"volume-up"
       }
       ,
@@ -132,7 +128,6 @@
         "SignalDirection": 1,
         "Pattern": [75, 69, 89, 95, 49],
         "DeviceID": 2,
-        "Device": null,
         "Icon":"volume-off"
       }
     ]
@@ -150,7 +145,6 @@
         "SignalDirection": 1,
         "Pattern": null,
         "DeviceID": 3,
-        "Device": null,
         "Icon":"child"
       }
     ]
