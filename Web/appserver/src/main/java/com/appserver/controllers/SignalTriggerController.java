@@ -10,6 +10,8 @@ import static spark.Spark.get;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.appserver.data.DbContext;
+
+import com.appserver.models.Device;
 import com.appserver.models.Signal;
 
 import com.rabbitmq.client.Channel;
@@ -46,6 +48,11 @@ public class SignalTriggerController extends BaseController
 	
 	private int PostToQueue(Signal signal)
 	{
+		//find associated device first
+		Device device = dbContext.getDevice(signal.getDeviceID());
+		if (device == null)
+			return 0;
+		
 		ConnectionFactory factory = new ConnectionFactory();
 	    factory.setHost("localhost");
 	    Connection connection = null;
@@ -56,11 +63,11 @@ public class SignalTriggerController extends BaseController
 		    connection = factory.newConnection();
 		    channel = connection.createChannel();
 		    
-	    	channel.queueDeclare("smart_akome", false, false, false, null);
+	    	channel.queueDeclare("smart_akome:"+device.getSignalDestinationID(), false, false, false, null);
 	    	
 	    	JsonTransformer json = new JsonTransformer();
 	        String message = json.render(signal);
-	        channel.basicPublish("", "smart_akome", null, message.getBytes());
+	        channel.basicPublish("", "smart_akome:"+device.getSignalDestinationID(), null, message.getBytes());
 	        
 	        return message.length();
 	    } catch (IOException e) {
