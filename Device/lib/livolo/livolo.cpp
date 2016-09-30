@@ -50,9 +50,9 @@ int fflg = 0;										// Fake flag, for debugging. Init to false. If true, prin
 // I found the timing parameters below to be VERY VERY critical
 // Only a few uSecs extra will make the switch fail.
 //
-int p_short = 150;									// 110 works quite OK
-int p_long = 300;									// 290-310 works quite OK
-int p_start = 500;									// 520 works quite OK
+int p_short = 100;									// Originally 160. Try putting 80ns less value
+int p_long = 220;									// Originally 320. Try putting 80ns less value
+int p_start = 440;									// Originally 520. Try putting 80ns less value
 
 Livolo::Livolo(unsigned char pin)
 {
@@ -117,7 +117,6 @@ void Livolo::sendButton(unsigned int remoteID, unsigned char keycode) {
 //
 //
 void Livolo::selectPulse(unsigned char inBit) {
-
 
     switch (inBit) {
     	case 0: 
