@@ -1,7 +1,11 @@
 from abc import abstractmethod
+import datetime
 
 class SignalSource():
     _on_signal_received = None
+
+    def log(self,message):
+        print "%s: %s" % (str(datetime.datetime.now()),message)
     
     @abstractmethod
     def init(self,device):
@@ -24,7 +28,10 @@ class SignalSource():
         self._on_signal_received = on_signal_received
 
 
-class SignalDestination():   
+class SignalDestination():
+    def log(self,message):
+        print "%s: %s" % (str(datetime.datetime.now()),message)
+    
     @abstractmethod
     def init(self,device):
         raise NotImplementedError("subclass must override init()")

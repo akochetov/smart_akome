@@ -11,6 +11,8 @@ from signals.signal import SignalSource
 from signals.signal_destination_factory import SignalDestinationFactory
 from signals.signal_source_factory import SignalSourceFactory
 
+import datetime
+
 #----------------------------------------------------
 class BaseProcessor:
     _device = None
@@ -28,10 +30,14 @@ class BaseProcessor:
         if (not self._device.SignalDestination == ''):
             self._signalDest = SignalDestinationFactory.createInstance(self._device.SignalDestination)     
 
+    def log(self,message):
+        print "%s: %s" % (str(datetime.datetime.now()),message)
+
     def start(self):
         if (not self._signalSource == None):
             self._signalSource.init(self._device)
             self._signalSource.start()
+
         if (not self._signalDest == None):
             self._signalDest.init(self._device)
             self._signalDest.start()
@@ -48,14 +54,15 @@ class BaseProcessor:
             
     def on_signal_received(self, signal):
         found = False
+
         for sig in self._device.Signals:
-            if (signal.ID == sig.ID or signal.Name == sig.Name):
-                self.sendSignal(signal)
+            if (signal.Name == sig.Name or signal.Pattern == sig.Pattern):
+                self.sendSignal(sig)
                 found = True
-                print("Signal found and sent: "+str(signal.ID)+", "+signal.Name)
+                self.log("Signal found and sent: "+str(sig.ID)+", "+sig.Name)
             
         if (not found):
-            print("Signal not found: "+str(signal.ID)+", "+signal.Name)
+            self.log("Signal not found: "+str(signal.ID)+", "+signal.Name)
 
 #----------------------------------------------------
             

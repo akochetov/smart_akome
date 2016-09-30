@@ -11,6 +11,7 @@ sys.path.append('..')
 
 from signals.signal_destination_factory import SignalDestinationFactory
 from model.device import Device
+from model.device_signal import Signal
 
 class PIRProcessor(BaseProcessor):
     _signalDestList = []
@@ -18,10 +19,11 @@ class PIRProcessor(BaseProcessor):
 
     def getLightDevice(self,deviceID):
         device = Device(ID=deviceID)
-        device.Settings["pin"] = self._device.Settings["light_sensor_pin"]
         return device
 
-    def start(self):       
+    def start(self):
+        BaseProcessor.start(self)
+       
         for light in self._device.Settings["light_devices"]:
             dest = SignalDestinationFactory.createInstance(self._device.SignalDestination)
             dest.init(self.getLightDevice(light))
@@ -32,11 +34,12 @@ class PIRProcessor(BaseProcessor):
         self._light_sensor = InputDevice(self._device.Settings["light_sensor_pin"], False)
 
     def stop(self):
+        BaseProcessor.stop(self)
+        
         for dest in self._signalDestList:
             dest.stop()
     
     def on_signal_received(self, signal):
-        print("Signal received: " +str(signal.Pattern))
         global last_trigger
         global light_thread
 
@@ -49,17 +52,17 @@ class PIRProcessor(BaseProcessor):
         last_trigger = time.time()
         
         light_value = self.get_light()
-        print("Motion detected at: "+str(datetime.datetime.now())+". Light sensor value: "+str(light_value))
+        self.log("Motion detected. Light sensor value: "+str(light_value))
         if (light_value == 1):#1 means no light, 0 - light is on.
             light_thread.On()
 
     def on(self):
         for dest in self._signalDestList:
-            dest.send(self._device.Settings["command_on"])
+            dest.send(Signal(ID=0,Name=self._device.Settings["command_on"]))
 
     def off(self):
         for dest in self._signalDestList:
-            dest.send(self._device.Settings["command_off"])
+            dest.send(Signal(ID=0,Name=self._device.Settings["command_off"]))
 
     def get_tries(self):
         return self._device.Settings["tries"]
@@ -88,26 +91,26 @@ class LightTriggerThread():
 
         for i in range(1,self._pir.get_tries()+1):
             if (self._exiting):
-                print("Exiting light trigger thread at: "+str(datetime.datetime.now()))
+                self._pir.log("Exiting light trigger thread")
                 break;
             
             last_trigger = time.time()
             
             if (self._off == 1):
-                print("Turning the light off. Try #"+str(i)+" at: "+str(datetime.datetime.now()))
+                self._pir.log("Turning the light off. Try #"+str(i))
                 self._pir.off()
             else:
-                print("Turning the light on. Try #"+str(i)+" at: "+str(datetime.datetime.now()))
+                self._pir.log("Turning the light on. Try #"+str(i))
                 self._pir.on()
 
             #sleep and check if the light is now on
             time.sleep(0.5)
             
             if (self._pir.get_light() == self._off):
-                print("Operation successfull at: "+str(datetime.datetime.now()))
+                self._pir.log("Operation successfull")
                 break
             else:
-                print("Operation failed at: "+str(datetime.datetime.now()))
+                self._pir.log("Operation failed")
         
     def On(self):
         self.Stop()
@@ -180,15 +183,15 @@ light_thread = LightTriggerThread(pir)
 timeout_thread = TimeoutThread(pir)
 timeout_thread.start()
 
-print("Processor started for device: "+str(pir._device.ID))
+pir.log("Processor started for device: "+str(pir._device.ID))
 
 while True:
     time.sleep(1)    
 
-print("Stopping PIR processor...")
+pir.log("Stopping PIR processor...")
 timeout_thread.Stop()
 pir.stop()
-print("PIR processor stopped")
+pir.log("PIR processor stopped")
 
 
 

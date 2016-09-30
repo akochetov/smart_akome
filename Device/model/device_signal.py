@@ -6,14 +6,16 @@ class Signal():
     Name = ""
     Icon = ""
     SignalDirection = 0
+    SignalDestinationID = 0
     Pattern = []
     DeviceID = 0
 
-    def __init__(self,ID,Name='',DeviceID = 0,Icon='',Pattern=[],SignalDirection=0):
+    def __init__(self,ID,Name='',DeviceID = 0,Icon='',Pattern=[],SignalDirection=0,SignalDestinationID=0):
         self.ID = ID
         self.Name = Name
         self.Icon = Icon
         self.SignalDirection = SignalDirection
+        self.SignalDestinationID = SignalDestinationID
         self.DeviceID = DeviceID
         self.Pattern = Pattern
 
@@ -23,7 +25,7 @@ class DeviceSignalFactory():
         return Signal(**json.loads(jsonString))
     @staticmethod
     def toJson(signal):
-        return json.dumps(signal)
+        return json.dumps(signal.__dict__)
     @staticmethod
     def fromArgs():
         if len(sys.argv) < 3:

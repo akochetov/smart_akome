@@ -1,7 +1,7 @@
 import time as Time
 import threading
 import atexit
-import AKO.GPIO._IrRxDevice as GPIO
+import AKO/AKO.GPIO._IrRxDevice as GPIO
 
 #IrRx event handler
 def sign(x):
@@ -27,7 +27,7 @@ def IrMessageReceived(message):
 
 #Main program
 
-irrxpin = 4
+irrxpin = 24
 
 irrx = GPIO.IrRxDevice(irrxpin)
 irrx.MessageReceived = IrMessageReceived

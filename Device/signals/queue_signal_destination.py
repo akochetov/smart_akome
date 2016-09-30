@@ -24,7 +24,14 @@ class QueueSignalDestination(SignalDestination):
             self.closeConnection()
 
     def send(self, signal):
-        self._channel.basic_publish(exchange='', routing_key='smart_akome:'+str(self._device.getDestinationID()), body=DeviceSignalFactory.toJson(signal))
+        #by default send signal to destination ID specified in device
+        dest_id = self._device.getDestinationID()
+
+        #if destination is specified per signal - use it
+        if (signal.SignalDestinationID):
+            dest_id=signal.SignalDestinationID
+            
+        self._channel.basic_publish(exchange='', routing_key='smart_akome:'+str(dest_id), body=DeviceSignalFactory.toJson(signal))
 
     #-------------------------------------------------
     #derived class specific methods
@@ -33,15 +40,16 @@ class QueueSignalDestination(SignalDestination):
         self._connection.close()
         self._connection = None
         self._channel = None
+        self.log("Destination queue has been shot down: smart_akome:"+str(self._device.getDestinationID()))
 
     def initConnection(self):
         self.stop()
-        
+
         self._connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
         self._channel = self._connection.channel()
-        
+
         self._channel.queue_declare(queue='smart_akome:'+str(self._device.getDestinationID()), durable = False, exclusive = False, auto_delete = False)
-        print("Destination queue has been set up: smart_akome:"+str(self._device.getDestinationID()))
+        self.log("Destination queue has been set up: smart_akome:"+str(self._device.getDestinationID()))
          
 
 #----------------------------------------------------

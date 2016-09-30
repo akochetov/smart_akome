@@ -50,7 +50,7 @@ class QueueSignalSource(SignalSource):
         
         self._channel.queue_declare(queue='smart_akome:'+str(self._device.getSourceID()), durable = False, exclusive = False, auto_delete = False)
         self._channel.basic_consume(self.callback, queue='smart_akome:'+str(self._device.getSourceID()), no_ack=True)
-        print("Source queue has been set up: smart_akome:"+str(self._device.getSourceID()))
+        self.log("Source queue has been set up: smart_akome:"+str(self._device.getSourceID()))
 
     def callback(self, ch, method, properties, body):
         self.signalReceived(body.decode())
