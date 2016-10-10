@@ -10,7 +10,7 @@ public class Signal extends EntityBase
 	
 	private String Name;
 	private SignalDirection signalDirection;
-	private short[] Pattern;
+	private long[] Pattern;
 	
 	private String Icon;
 
