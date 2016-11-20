@@ -62,9 +62,11 @@ static PyObject *py_sendButton(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
+	piHiPri(99);
 	Livolo liv(pin);
 
 	liv.sendButton(remoteID, code);
+	piHiPri(0);
 
 	Py_RETURN_NONE;
 }

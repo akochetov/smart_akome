@@ -29,15 +29,10 @@ public class SignalTriggerController extends BaseController
 	@Override
     protected void setupEndPoints()
     {
-        get(getApiContext() + "/triggersignal/:id", "application/json",
-        	(request, response) -> PostToQueue( Integer.parseInt(request.params(":id")) ),
-        	new JsonTransformer());
+        get(getApiContext() + "/triggersignal/:id", "application/json", (request, response) -> PostToQueue( Integer.parseInt(request.params(":id")) ),new JsonTransformer());
         
         //TODO Add 201 http response as an output
-        post(getApiContext() + "/triggersignal", "application/json",
-        		(request, response) ->
-       			PostToQueue(Signal.class.cast(JsonEntity.fromJson(request.body(),Signal.class))),
-        		new JsonTransformer());
+        post(getApiContext() + "/triggersignal", "application/json",(request, response) -> PostToQueue(Signal.class.cast(JsonEntity.fromJson(request.body(),Signal.class))), new JsonTransformer());
     }
 	
 	private int PostToQueue(int signalId)

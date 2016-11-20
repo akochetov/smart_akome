@@ -3,11 +3,19 @@ sudo apt-get update
 #install RabbitMQ
 sudo apt-get install rabbitmq-server
 
-#install mono
-sudo apt-get install mono-complete
+#install RabbitMQ python lib
+sudo pip install pika
 
-#install apache
-sudo apt-get install apache2
+#install python dev tools
+sudo apt-get install python-dev -y
 
-#setup mod_mono
-sudo apt-get install libapache2-mod-mono
+#install Wiring Pi and Livolo
+bash ../Device/lib/install_livolo.sh
+
+#install Livolo python lib
+cd ../Device/lib/livolo
+sudo python setup.py install
+
+@install IR python lib
+cd ../ir
+sudo python setup.py install

@@ -23,17 +23,12 @@ public class DeviceController extends BaseController
     protected void setupEndPoints()
     {
 		//TODO Add 201 http response as an output
-        post(getApiContext() + "/devices", "application/json", (request, response) ->
-        	dbContext.addDevice(Device.class.cast( JsonEntity.fromJson(request.body(),Device.class) )),
-            new JsonTransformer());
+        post(getApiContext() + "/devices", "application/json", (request, response) -> dbContext.addDevice(Device.class.cast( JsonEntity.fromJson(request.body(),Device.class) )), new JsonTransformer());
  
-        get(getApiContext() + "/devices/:id", "application/json", (request, response)
-                -> dbContext.getDevice(Integer.parseInt(request.params(":id"))), new JsonTransformer());
+        get(getApiContext() + "/devices/:id", "application/json", (request, response) -> dbContext.getDevice(Integer.parseInt(request.params(":id"))), new JsonTransformer());
  
-        get(getApiContext() + "/devices", "application/json", (request, response)
-                -> dbContext.getDevices(), new JsonTransformer());
+        get(getApiContext() + "/devices", "application/json", (request, response) -> dbContext.getDevices(), new JsonTransformer());
  
-        put(getApiContext() + "/devices/:id", "application/json", (request, response)
-                -> dbContext.putDevice(Integer.parseInt(request.params(":id")), Device.class.cast(JsonEntity.fromJson(request.body(),Device.class))), new JsonTransformer());
+        put(getApiContext() + "/devices/:id", "application/json", (request, response) -> dbContext.putDevice(Integer.parseInt(request.params(":id")), Device.class.cast(JsonEntity.fromJson(request.body(),Device.class))), new JsonTransformer());
     }
 }

@@ -27,7 +27,7 @@ public class Signal extends EntityBase
 	public SignalDirection getSignalDirection() {	return signalDirection;	}
 	public void setSignalDirection(SignalDirection signalDirection) {	this.signalDirection = signalDirection; }
 	
-	public short[] getPattern() { return Pattern;}
+	public long[] getPattern() { return Pattern;}
 	public String getIcon() { return Icon;}
 	
 	public Signal(int id)
