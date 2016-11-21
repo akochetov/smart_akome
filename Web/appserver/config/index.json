@@ -1,10 +1,10 @@
 [
 	{
 		Name: "Family at Home",
-		Config: "default.json"
+		ConfigFile: "config/default.json"
 	},
 	{
 		Name: "Security Alarm",
-		Config: "security.json"
+		ConfigFile: "config/security.json"
 	}
 ]

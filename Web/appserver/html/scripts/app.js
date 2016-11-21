@@ -58,3 +58,23 @@ app.controller('CreateCtrl', function ($scope, $http, $location) {
         })
     }
 });
+
+
+
+
+app.controller('ConfigCtrl', function ($scope, $http) {
+    $http.get('/api/configs').success(function (data) {  
+        $scope.configs = data;
+    }).error(function (data, status) {
+        console.log('Error ' + data)
+    })
+
+    $scope.deviceStatusChanged = function (config) {
+        console.log(device);
+        $http.put('/api/configs/' + config.ID, config).success(function (data) {
+            console.log('status changed');
+        }).error(function (data, status) {
+            console.log('Error ' + data)
+        })
+    }
+});

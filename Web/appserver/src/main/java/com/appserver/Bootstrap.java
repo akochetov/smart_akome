@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.appserver.controllers.ConfigController;
 import com.appserver.controllers.DeviceController;
 import com.appserver.controllers.SignalTriggerController;
 import com.appserver.data.DbContext;
@@ -37,6 +38,7 @@ public class Bootstrap {
     	
         //setup routes and controllers
         DbContext dbContext = new DbContext(config.getProperty("db_file"));
+        new ConfigController(dbContext);
         new DeviceController(dbContext);
         new SignalTriggerController(dbContext);
 	}
