@@ -62,17 +62,23 @@ app.controller('CreateCtrl', function ($scope, $http, $location) {
 
 
 
-app.controller('ConfigCtrl', function ($scope, $http) {
+app.controller('ConfigCtrl', function ($scope, $http, $location) {
     $http.get('/api/configs').success(function (data) {  
         $scope.configs = data;
     }).error(function (data, status) {
         console.log('Error ' + data)
     })
 
-    $scope.deviceStatusChanged = function (config) {
-        console.log(device);
+    $scope.triggerConfig = function (config) {
+        console.log(config);
+
+	for (c of $scope.configs)
+		c.Active = false;
+
+	config.Active = true;
         $http.put('/api/configs/' + config.ID, config).success(function (data) {
             console.log('status changed');
+		$location.path('//');
         }).error(function (data, status) {
             console.log('Error ' + data)
         })

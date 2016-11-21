@@ -38,7 +38,7 @@ public class DbContext
     		Configs.addAll(configs);    	
     		
     		//setup current config
-    		currentConfig = Configs.get(0);
+    		selectConfig(Configs.get(0));
     	}
     	finally
     	{
@@ -72,15 +72,21 @@ public class DbContext
    	
         }
     
-    
-    
-    public Config putConfig(int id, Config config)
+	private void selectConfig(Config config)
+	{
+		if (currentConfig != null) currentConfig.Deactivate();
+
+		currentConfig = config;
+		currentConfig.Activate();
+	}
+        
+    	public Config putConfig(int id, Config config)
 	{
 		int index = getConfigs().indexOf(new Config(id));
 
 		if (index == -1) throw new NoSuchElementException();
 		
-		currentConfig = getConfigs().get(index);
+		selectConfig(getConfigs().get(index));
 		
 		return currentConfig;
 	}

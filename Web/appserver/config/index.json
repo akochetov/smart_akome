@@ -1,9 +1,11 @@
 [
 	{
+		ID: 1,
 		Name: "Family at Home",
 		ConfigFile: "config/default.json"
 	},
 	{
+		ID: 2,
 		Name: "Security Alarm",
 		ConfigFile: "config/security.json"
 	}

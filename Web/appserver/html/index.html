@@ -24,14 +24,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/#/">App Server</a>
+            <a class="navbar-brand" href="/">App Server</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav" ng-controller="ConfigCtrl">
-                <li class="active"><a href="/#/">Control Devices</a></li>
-                <li ng-repeat="config in configs">
-			<a href="#">{{config.Name}}</a>
+                <li ng-repeat="config in configs" class="{{config.Active ? 'active' : ''}}" >
+			<a href="/" ng-click="triggerConfig(config)">{{config.Name}}</a>
 		</li>
             </ul>
         </div>
@@ -52,5 +51,14 @@
 <script src="/scripts/app.js"></script>
 
 <script src="/js/bootstrap.min.js"></script>
+
+<script>
+$(document).on('click','.navbar-collapse.in',function(e){
+if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle'){
+$(this).collapse('hide');
+}
+});
+</script>
+
 </body>
 </html>

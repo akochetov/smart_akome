@@ -61,7 +61,7 @@ class DeviceDispatcher():
     
     def UpdateDevices(self):
         del self._devices[:]
-        with open('../Web/appserver/devices.json', 'r') as f:
+        with open('../Web/appserver/config/default.json', 'r') as f:
             ln = f.read()
             devices = json.loads(ln)
             for device in devices:                

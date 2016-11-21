@@ -16,11 +16,13 @@ public class Config extends EntityBase
    
     private String Name;
     private String ConfigFile;
+
+	private boolean Active = false;
        
     private String Icon;  
 
-	private List<Signal> Signals = new ArrayList<Signal>(); 
-	private List<Device> Devices = new ArrayList<Device>(); 
+	private transient List<Signal> Signals = new ArrayList<Signal>(); 
+	private transient List<Device> Devices = new ArrayList<Device>(); 
 
 	public Config()
 	{
@@ -34,6 +36,10 @@ public class Config extends EntityBase
 
     public int getID() { return ID; }
 	public void setID(int id) { ID = id; }
+
+    public boolean isActive() { return Active; }
+	public void Activate() { Active = true; }
+	public void Deactivate() { Active = false; }
 
     public String getName() { return Name; };
     public void setName(String name) { Name = name; };
