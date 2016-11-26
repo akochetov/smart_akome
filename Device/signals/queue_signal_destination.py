@@ -17,11 +17,11 @@ class QueueSignalDestination(SignalDestination):
         self._device = device       
 
     def start(self):
-        self.initConnection()
+        pass;#self.initConnection()
 
     def stop(self):
-        if (not self._connection == None):
-            self.closeConnection()
+        pass;#if (not self._connection == None):
+        #   self.closeConnection()
 
     def send(self, signal):
         #by default send signal to destination ID specified in device
@@ -30,8 +30,10 @@ class QueueSignalDestination(SignalDestination):
         #if destination is specified per signal - use it
         if (signal.SignalDestinationID):
             dest_id=signal.SignalDestinationID
-            
+
+        self.initConnection();
         self._channel.basic_publish(exchange='', routing_key='smart_akome:'+str(dest_id), body=DeviceSignalFactory.toJson(signal))
+        self.closeConnection();
 
     #-------------------------------------------------
     #derived class specific methods

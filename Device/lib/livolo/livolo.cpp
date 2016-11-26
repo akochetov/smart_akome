@@ -34,7 +34,7 @@
 #include <arpa/inet.h>
 #include "livolo.h"
 
-#define REPEATS 100
+#define REPEATS 150
 
 // Global Variables
 //
@@ -50,9 +50,9 @@ int fflg = 0;										// Fake flag, for debugging. Init to false. If true, prin
 // I found the timing parameters below to be VERY VERY critical
 // Only a few uSecs extra will make the switch fail.
 //
-int p_short = 120;									// Originally 160. Try putting 80ns less value
-int p_long = 240;									// Originally 320. Try putting 80ns less value
-int p_start = 440;									// Originally 520. Try putting 80ns less value
+int p_short = 150;									// Originally 160. With WiringPi hi prio 150 seems to work best
+int p_long = 305;									// Originally 320. With WiringPi hi prio 305 seems to work best
+int p_start = 520;									// Originally 520. With WiringPi hi prio 520 seems to work best
 
 Livolo::Livolo(unsigned char pin)
 {
