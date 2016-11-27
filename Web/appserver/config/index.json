@@ -2,11 +2,15 @@
 	{
 		ID: 1,
 		Name: "Family at Home",
-		ConfigFile: "config/default.json"
+		ConfigFile: "config/default.json",
+		Css: "bootstrap.min.superhero.css",
+		InvertColors: true
 	},
 	{
 		ID: 2,
 		Name: "Security Alarm",
-		ConfigFile: "config/security.json"
+		ConfigFile: "config/security.json",
+		Css: "bootstrap.min.united.css",
+		InvertColors = false
 	}
 ]

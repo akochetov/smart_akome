@@ -16,8 +16,10 @@ public class Config extends EntityBase
    
     private String Name;
     private String ConfigFile;
+    private String Css;
 
 	private boolean Active = false;
+	private boolean InvertColors = false;
        
     private String Icon;  
 
@@ -47,6 +49,9 @@ public class Config extends EntityBase
     public String getConfigFile() { return ConfigFile; };
     public void setConfigFile(String config) { ConfigFile = config; };
     
+    public String getCss() { return Css; };
+    public void setCss(String css) { Css = css; };
+
     public String getIcon() { return Icon;};
 
 	public List<Signal> getSignals() {	return Signals;	}

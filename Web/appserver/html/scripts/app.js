@@ -36,6 +36,7 @@ app.controller('ListCtrl', function ($scope, $http) {
     
     $scope.triggerSignal = function (signal) {
         console.log(signal);
+
         $http.post('/api/triggersignal', signal).success(function (data) {
             $location.path('/');
         }).error(function (data, status) {
@@ -62,9 +63,27 @@ app.controller('CreateCtrl', function ($scope, $http, $location) {
 
 
 
-app.controller('ConfigCtrl', function ($scope, $http, $location) {
+app.controller('ConfigCtrl', function ($scope, $http, $location, $rootScope) {
     $http.get('/api/configs').success(function (data) {  
         $scope.configs = data;
+
+	$rootScope.config = data[0];
+	for (c of $scope.configs)
+	{
+		css = document.getElementById(c.Css);
+		if (css == null)
+		{
+			head = document.getElementsByTagName("head")[0];
+			new_css = document.createElement('link');
+			new_css.id = c.Css;
+			new_css.href = "/css/"+c.Css;
+			new_css.rel="stylesheet";
+			new_css.disabled = !c.Active;
+			if (c.Active) $rootScope.config = c;
+			head.appendChild(new_css);
+		}
+	}
+
     }).error(function (data, status) {
         console.log('Error ' + data)
     })
@@ -73,9 +92,18 @@ app.controller('ConfigCtrl', function ($scope, $http, $location) {
         console.log(config);
 
 	for (c of $scope.configs)
+	{
+		css = document.getElementById(c.Css);
+		css.disabled = true;
 		c.Active = false;
+	}
+
+	css = document.getElementById(config.Css);
+	css.disabled = false;
 
 	config.Active = true;
+	$rootScope.config = config;
+
         $http.put('/api/configs/' + config.ID, config).success(function (data) {
             console.log('status changed');
 		$location.path('//');
