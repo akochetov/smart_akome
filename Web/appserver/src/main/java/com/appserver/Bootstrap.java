@@ -1,4 +1,4 @@
-package com.appserver;
+package smart_akome.Web.appserver.src.main.java.com.appserver;
 
 import static spark.Spark.setIpAddress;
 import static spark.Spark.setPort;
@@ -12,6 +12,7 @@ import com.appserver.controllers.ConfigController;
 import com.appserver.controllers.DeviceController;
 import com.appserver.controllers.SignalTriggerController;
 import com.appserver.data.DbContext;
+import com.appserver.models.User;
 
 public class Bootstrap {
 
@@ -41,6 +42,9 @@ public class Bootstrap {
         new ConfigController(dbContext);
         new DeviceController(dbContext);
         new SignalTriggerController(dbContext);
+
+	//add single user in this implementation
+	dbContext.getUsers().add(new User(1,config.getProperty("user"),config.getProperty("hashedpassword")));
 	}
 
 }

@@ -12,12 +12,16 @@ import java.lang.reflect.Type;
 import com.appserver.models.Config;
 import com.appserver.models.Device;
 import com.appserver.models.Signal;
+import com.appserver.models.User;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class DbContext
 {
      private List<Config> Configs = new ArrayList<Config>();
+     private List<User> Users = new ArrayList<User>();
+
      private Config currentConfig;
     
     public DbContext(String connectionString) throws IOException
@@ -131,8 +135,20 @@ public class DbContext
 		
 		return getSignals().get(index);
 	}
+
+
+	public User getUserByUsername(String username)
+	{
+		int index = getUsers().indexOf(new User(0,username,""));
+
+		if (index == -1) throw new NoSuchElementException();
+		
+		return getUsers().get(index);
+	}
+    
 	
 	public List<Signal> getSignals() {	return currentConfig.getSignals();	}
 	public List<Device> getDevices() {	return currentConfig.getDevices();	}
 	public List<Config> getConfigs() {	return Configs;	}
+	public List<User> getUsers() {	return Users;	}
 }

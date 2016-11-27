@@ -11,8 +11,8 @@ app.config(function ($routeProvider) {
         templateUrl: 'views/list.html',
         controller: 'ListCtrl'
     }).when('/create', {
-        templateUrl: 'views/create.html',
-        controller: 'CreateCtrl'
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
     }).otherwise({
         redirectTo: '/'
     })
@@ -45,19 +45,10 @@ app.controller('ListCtrl', function ($scope, $http) {
     }
 });
 
-app.controller('CreateCtrl', function ($scope, $http, $location) {
+app.controller('LoginCtrl', function ($scope, $http, $location) {
     $scope.device = {
         done: false
     };
-
-    $scope.createDevice = function () {
-        console.log($scope.device);
-        $http.post('/api/devices', $scope.device).success(function (data) {
-            $location.path('/');
-        }).error(function (data, status) {
-            console.log('Error ' + data)
-        })
-    }
 });
 
 
