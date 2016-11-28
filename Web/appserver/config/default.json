@@ -103,6 +103,51 @@
     "Settings": {"pin":23},
     "Signals":[]
   },
+  {
+    "ID": 2,
+    "Name": "Speakers",
+    "CommunicationMethod": 2,
+    "Icon": "speaker-1.png",
+    "SignalSource": "queue",
+    "SignalDestination": "ir",
+    "Processor": "speakers_processor",
+    "Settings": {"pin":25},
+    "Signals":
+    [
+      {
+        "ID": 3,
+        "Name": "On/Off",
+        "SignalDirection": 1,
+        "Pattern": [4278249232,3927303952],
+        "DeviceID": 2,
+        "Icon":"power-off"
+      },
+      {
+        "ID": 4,
+        "Name": "Vol.Dwn",
+        "SignalDirection": 1,
+        "Pattern": [4077709072],
+        "DeviceID": 2,
+        "Icon":"volume-down"
+      },
+      {
+        "ID": 5,
+        "Name": "Vol.Up",
+        "SignalDirection": 1,
+        "Pattern": [4127844112],
+        "DeviceID": 2,
+        "Icon":"volume-up"
+      },
+      {
+        "ID": 6,
+        "Name": "Mute",
+        "SignalDirection": 1,
+        "Pattern": [4261537552],
+        "DeviceID": 2,
+        "Icon":"volume-off"
+      }
+    ]
+  },
  {
     "ID": 1,
     "Name": "All light",
@@ -425,51 +470,6 @@
       }
     ]
   }, 
-  {
-    "ID": 2,
-    "Name": "Speakers",
-    "CommunicationMethod": 2,
-    "Icon": "speaker-1.png",
-    "SignalSource": "queue",
-    "SignalDestination": "ir",
-    "Processor": "speakers_processor",
-    "Settings": {"pin":25},
-    "Signals":
-    [
-      {
-        "ID": 3,
-        "Name": "On/Off",
-        "SignalDirection": 1,
-        "Pattern": [4278249232,3927303952],
-        "DeviceID": 2,
-        "Icon":"power-off"
-      },
-      {
-        "ID": 4,
-        "Name": "Vol.Dwn",
-        "SignalDirection": 1,
-        "Pattern": [4077709072],
-        "DeviceID": 2,
-        "Icon":"volume-down"
-      },
-      {
-        "ID": 5,
-        "Name": "Vol.Up",
-        "SignalDirection": 1,
-        "Pattern": [4127844112],
-        "DeviceID": 2,
-        "Icon":"volume-up"
-      },
-      {
-        "ID": 6,
-        "Name": "Mute",
-        "SignalDirection": 1,
-        "Pattern": [4261537552],
-        "DeviceID": 2,
-        "Icon":"volume-off"
-      }
-    ]
-  },
   {
     "ID": 3,
     "Name": "Motion Sensor",

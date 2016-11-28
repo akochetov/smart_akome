@@ -1,9 +1,10 @@
 
 var app = angular.module('appserver', [
-    'ngCookies',
+    'angularModalService',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'ngAnimate'
 ]);
 
 app.config(function ($routeProvider) {
@@ -45,16 +46,40 @@ app.controller('ListCtrl', function ($scope, $http) {
     }
 });
 
-app.controller('LoginCtrl', function ($scope, $http, $location) {
-    $scope.device = {
-        done: false
-    };
+
+app.controller('AlertCtrl', function ($scope, $element, close, text)
+{
+	$scope.text = text;
+
+    $scope.close = function(result) {
+ 	  close(result, 500);  // close, but give 500ms for bootstrap to animate
+	};
 });
 
+app.controller('LoginCtrl', function ($scope, $element, close)
+{
+	$scope.username = null;
+	$scope.password = null;
 
+    $scope.cancel = function(){
+	//  Manually hide the modal.
+	$element.modal('hide');	
+	close({
+	username: null,
+	password: null
+	}, 500);  // close, but give 500ms for bootstrap to animate
+    };
 
+    $scope.close = function() {
+ 	  close({
+		username: $scope.username,
+		password: $scope.password
+		}, 500);  // close, but give 500ms for bootstrap to animate
+	};
+});
 
-app.controller('ConfigCtrl', function ($scope, $http, $location, $rootScope) {
+app.controller('ConfigCtrl', function ($scope, $http, $location, $element, $rootScope, ModalService)
+{
     $http.get('/api/configs').success(function (data) {  
         $scope.configs = data;
 
@@ -74,32 +99,60 @@ app.controller('ConfigCtrl', function ($scope, $http, $location, $rootScope) {
 			head.appendChild(new_css);
 		}
 	}
-
     }).error(function (data, status) {
         console.log('Error ' + data)
     })
 
-    $scope.triggerConfig = function (config) {
+    $scope.showConfigLogin = function (config) {
+	    ModalService.showModal({
+	      templateUrl: "views/login_dialog.html",
+	      controller: "LoginCtrl"
+	    }).then(function(modal) {
+	      modal.element.modal();
+	      modal.close.then(function(result) {
+		if (result.username && result.password)
+			$scope.triggerConfig(config,result.username,result.password);
+		});
+	    });
+    };
+
+    $scope.showAlert = function (text) {
+	    ModalService.showModal({
+	      templateUrl: "views/alert_dialog.html",
+	      controller: "AlertCtrl",
+		inputs: {text: text}
+	    }).then(function(modal) {
+	      modal.element.modal();
+	      modal.close.then(function(result) {
+		});
+	    });
+    };
+
+    $scope.triggerConfig = function (config,username,password) {
         console.log(config);
+	
+	var user = {id:0, Username:username, Password:password};
 
-	for (c of $scope.configs)
-	{
-		css = document.getElementById(c.Css);
-		css.disabled = true;
-		c.Active = false;
-	}
+        $http.put('/api/configs/' + config.ID, user).success(function (data) {
+		console.log('status changed');
 
-	css = document.getElementById(config.Css);
-	css.disabled = false;
+		for (c of $scope.configs)
+		{
+			css = document.getElementById(c.Css);
+			css.disabled = true;
+			c.Active = false;
+		}
+	
+		css = document.getElementById(config.Css);
+		css.disabled = false;
+	
+		config.Active = true;
+		$rootScope.config = config;
 
-	config.Active = true;
-	$rootScope.config = config;
-
-        $http.put('/api/configs/' + config.ID, config).success(function (data) {
-            console.log('status changed');
 		$location.path('//');
         }).error(function (data, status) {
             console.log('Error ' + data)
+		$scope.showAlert("Invalid username or password");
         })
     }
 });

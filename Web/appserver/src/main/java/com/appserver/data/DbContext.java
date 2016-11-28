@@ -13,6 +13,7 @@ import com.appserver.models.Config;
 import com.appserver.models.Device;
 import com.appserver.models.Signal;
 import com.appserver.models.User;
+import com.appserver.models.UserDTO;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -75,6 +76,18 @@ public class DbContext
         	}
    	
         }
+
+
+
+	public User getUserByUsername(String username)
+	{
+		int index = getUsers().indexOf(new User(0,username));
+
+		if (index == -1) throw new NoSuchElementException();
+		
+		return getUsers().get(index);
+	}
+    
     
 	private void selectConfig(Config config)
 	{
@@ -84,8 +97,15 @@ public class DbContext
 		currentConfig.Activate();
 	}
         
-    	public Config putConfig(int id, Config config)
+    	public Config putConfig(int id, UserDTO userdto)
 	{
+		//Find user by user name
+		User user = getUserByUsername(userdto.Username);
+
+		if (!user.Authenticate(userdto.Username,userdto.Password))
+			throw new IllegalArgumentException();
+
+		//Select config
 		int index = getConfigs().indexOf(new Config(id));
 
 		if (index == -1) throw new NoSuchElementException();
@@ -135,17 +155,6 @@ public class DbContext
 		
 		return getSignals().get(index);
 	}
-
-
-	public User getUserByUsername(String username)
-	{
-		int index = getUsers().indexOf(new User(0,username,""));
-
-		if (index == -1) throw new NoSuchElementException();
-		
-		return getUsers().get(index);
-	}
-    
 	
 	public List<Signal> getSignals() {	return currentConfig.getSignals();	}
 	public List<Device> getDevices() {	return currentConfig.getDevices();	}

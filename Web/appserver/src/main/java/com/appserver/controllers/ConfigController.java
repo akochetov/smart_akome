@@ -7,6 +7,7 @@ import static spark.Spark.put;
 
 import com.appserver.data.DbContext;
 import com.appserver.models.Config;
+import com.appserver.models.UserDTO;
 
 import Utils.JsonEntity;
 import Utils.JsonTransformer;
@@ -28,6 +29,8 @@ public class ConfigController extends BaseController
  
         get(getApiContext() + "/configs", "application/json", (request, response) -> dbContext.getConfigs(), new JsonTransformer());
  
-        put(getApiContext() + "/configs/:id", "application/json", (request, response) -> dbContext.putConfig(Integer.parseInt(request.params(":id")), Config.class.cast(JsonEntity.fromJson(request.body(),Config.class))), new JsonTransformer());
+        put(getApiContext() + "/configs/:id", "application/json",
+		(request, response) -> dbContext.putConfig(Integer.parseInt(request.params(":id")),UserDTO.class.cast(JsonEntity.fromJson(request.body(),UserDTO.class))),
+		new JsonTransformer());
     }
 }
