@@ -14,5 +14,13 @@
 		Css: "bootstrap.min.united.css",
 		InvertColors: false,
 		Active: true
+	},
+	{
+		ID: 3,
+		Name: "All Off",
+		ConfigFile: "config/off.json",
+		Css: "bootstrap.min.superhero.css",
+		InvertColors: true,
+		Active: false
 	}
 ]

@@ -13,7 +13,7 @@
 case "$1" in
 	start)
 		cd {dir}/../Web/appserver/target/
-		nohup java -jar appserver.jar >/dev/null 2>&1 &
+		nohup java -jar appserver.jar >../../../Device/logs/appserver.log 2>&1 &
 		cd {dir}/../Device/processors
 		nohup stdbuf -oL python dispatcher_processor.py 97924 >../logs/dispatcher.log 2>&1 &
 		;;

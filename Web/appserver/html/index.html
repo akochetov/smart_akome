@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav" ng-controller="ConfigCtrl">
                 <li ng-repeat="config in configs" class="{{config.Active ? 'active' : ''}}" >
-			<a href="/#/" ng-click="showConfigLogin(config);">{{config.Name}}</a>
+			<a href="/#/" ng-click="showConfigLogin(config);" ng-cloack>{{config.Name}}</a>
 		</li>
             </ul>
         </div>

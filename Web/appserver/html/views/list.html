@@ -1,4 +1,5 @@
-<h1>Devices</h1>
+<h1 ng-show="devices.length > 0">Devices</h1>
+<h1 ng-show="devices.length == 0">System is off</h1>
 <div class="row" style="">
     <div class="col-sm-6 col-md-6 col-lg-6" style="white-space: nowrap;" ng-repeat="device in devices" ng-hide="device.CommunicationMethod == 1" >
 		<table>
@@ -7,11 +8,11 @@
 					<img src="/img/{{device.Icon}}" style="-webkit-filter: invert({{+config.InvertColors}});filter: invert({{+config.InvertColors}});margin: 25px 15px 15px 15px; width:50px; height:50px;"/>
             	</td>
             	<td>
-            		<h5>{{device.Name}}</h5>
+            		<h5 ng-cloack>{{device.Name}}</h5>
        				<div class="btn-group" ng-repeat="signal in device.Signals">	
 					<a class="btn btn-default" style="margin-right: 5px; min-width: 50px;" ng-click="triggerSignal(signal)">
 					<i class="fa fa-{{signal.Icon}}" aria-hidden="true"></i>
-					<span class="hidden-xs">
+					<span class="hidden-xs" ng-cloack>
 					{{signal.Name}}
 					</span>
 					</a>

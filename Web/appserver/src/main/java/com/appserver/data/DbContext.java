@@ -63,11 +63,11 @@ public class DbContext
         		config.getDevices().addAll(devices);  
         		
         		    	//load signals
-            	for(Iterator<Device> dev = devices.iterator(); dev.hasNext(); )
-            	{
-            		  Device device = dev.next();
-            		  config.getSignals().addAll(device.getSignals());
-            	}    	
+	            	for(Iterator<Device> dev = devices.iterator(); dev.hasNext(); )
+	            	{
+	            		  Device device = dev.next();
+	            		  config.getSignals().addAll(device.getSignals());
+	            	}    	
         	}
         	finally
         	{
