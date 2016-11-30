@@ -8,11 +8,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import java.util.Iterator;
+
 import com.appserver.controllers.ConfigController;
 import com.appserver.controllers.DeviceController;
 import com.appserver.controllers.SignalTriggerController;
 import com.appserver.data.DbContext;
 import com.appserver.models.User;
+import com.appserver.models.Config;
+import Utils.Queue;
 
 public class Bootstrap {
 
@@ -39,12 +43,20 @@ public class Bootstrap {
     	
         //setup routes and controllers
         DbContext dbContext = new DbContext(config.getProperty("db_file"));
-        new ConfigController(dbContext);
         new DeviceController(dbContext);
         new SignalTriggerController(dbContext);
+        new ConfigController(dbContext,Integer.parseInt(config.getProperty("dispatcherID")));
 
 	//add single user in this implementation
 	dbContext.getUsers().add(new User(1,config.getProperty("user"),config.getProperty("salt"),config.getProperty("hashedpassword")));
+
+	//activate devices mode
+	for(Iterator<Config> i = dbContext.getConfigs().iterator(); i.hasNext(); )
+		{
+			Config c = i.next();
+			if (c.isActive())
+				Queue.Post(Integer.parseInt(config.getProperty("dispatcherID")),c.getConfigFile());
+		}
 	}
 
 }

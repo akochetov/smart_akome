@@ -13,7 +13,7 @@ import com.appserver.models.Config;
 import com.appserver.models.Device;
 import com.appserver.models.Signal;
 import com.appserver.models.User;
-import com.appserver.models.UserDTO;
+import com.appserver.data.UserDTO;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,9 +41,6 @@ public class DbContext
     		
     		//load configs
     		Configs.addAll(configs);    	
-    		
-    		//setup current config
-    		selectConfig(Configs.get(0));
     	}
     	finally
     	{
@@ -56,6 +53,8 @@ public class DbContext
         	try    
         	{
         	    Config config = i.next();
+
+			if (config.isActive()) selectConfig(config);
         		fileReader = new FileReader(config.getConfigFile());
         		
         		Collection<Device> devices = gson.fromJson(fileReader, collectionType);
@@ -91,8 +90,13 @@ public class DbContext
     
 	private void selectConfig(Config config)
 	{
-		if (currentConfig != null) currentConfig.Deactivate();
+		if (currentConfig != null) 
+		{
+			System.out.println("Deativating config: "+currentConfig.getConfigFile());
+			currentConfig.Deactivate();
+		}
 
+		System.out.println("Activating config: "+config.getConfigFile());
 		currentConfig = config;
 		currentConfig.Activate();
 	}

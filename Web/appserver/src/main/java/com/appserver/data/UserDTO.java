@@ -1,4 +1,4 @@
-package com.appserver.models;
+package com.appserver.data;
 
 /**
  * User DTO entity

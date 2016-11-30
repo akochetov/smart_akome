@@ -22,7 +22,7 @@ class BaseProcessor:
 
     def __init__(self):
         self._device = DeviceFactory.fromArgs()
-
+        
         if (not self._device.SignalSource == ''):
             self._signalSource = SignalSourceFactory.createInstance(self._device.SignalSource)
             self._signalSource.set_signal_received(self.on_signal_received)
@@ -32,8 +32,9 @@ class BaseProcessor:
 
     def log(self,message):
         print "%s: %s" % (str(datetime.datetime.now()),message)
+        sys.stdout.flush()
 
-    def start(self):
+    def start(self):       
         if (not self._signalSource == None):
             self._signalSource.init(self._device)
             self._signalSource.start()

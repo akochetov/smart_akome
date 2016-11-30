@@ -1,6 +1,6 @@
 [
   {
-    "ID": 4,
+    "ID": 54154,
     "Name": "Infrared Sensor",
     "CommunicationMethod": 1,
     "SignalSource": "ir",
@@ -94,7 +94,7 @@
     ]
   },  
 {
-    "ID": -1,
+    "ID": 54150,
     "Name": "Livolo Radio Transmitter",
     "CommunicationMethod": 1,
     "SignalSource": "queue",
@@ -104,7 +104,7 @@
     "Signals":[]
   },
  {
-    "ID": 1,
+    "ID": 54151,
     "Name": "All light",
     "CommunicationMethod": 2,
     "SignalSource": "queue",
@@ -133,7 +133,7 @@
     ]
  },
   {
-    "ID": 3,
+    "ID": 54153,
     "Name": "Motion Sensor",
     "CommunicationMethod": 3,
     "SignalSource": "inputdevice",

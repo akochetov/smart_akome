@@ -18,6 +18,7 @@ import com.rabbitmq.client.Channel;
 
 import Utils.JsonEntity;
 import Utils.JsonTransformer;
+import Utils.Queue;
 
 public class SignalTriggerController extends BaseController
 {
@@ -47,48 +48,6 @@ public class SignalTriggerController extends BaseController
 		Device device = dbContext.getDevice(signal.getDeviceID());
 		if (device == null)
 			return 0;
-		
-		ConnectionFactory factory = new ConnectionFactory();
-	    factory.setHost("localhost");
-	    Connection connection = null;
-	    Channel channel = null;
-	    
-	    try
-	    {
-		    connection = factory.newConnection();
-		    channel = connection.createChannel();
-		    
-	    	channel.queueDeclare("smart_akome:"+device.getSignalDestinationID(), false, false, false, null);
-	    	
-	    	JsonTransformer json = new JsonTransformer();
-	        String message = json.render(signal);
-	        channel.basicPublish("", "smart_akome:"+device.getSignalDestinationID(), null, message.getBytes());
-	        
-	        return message.length();
-	    } catch (IOException e) {
-	    	return 0;
-		} catch (TimeoutException e) {
-			return 0;
-		}
-	    finally
-	    {
-	    	if (channel !=null)
-				try {
-					channel.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TimeoutException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        if (connection != null)
-				try {
-					connection.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    }
+		return Queue.Post(device,signal);
 	}
 }
