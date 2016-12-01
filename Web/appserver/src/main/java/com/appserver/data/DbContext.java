@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import java.io.*;
-import java.lang.reflect.Type;
 
 import com.appserver.models.Config;
 import com.appserver.models.Device;
@@ -15,7 +14,8 @@ import com.appserver.models.Signal;
 import com.appserver.models.User;
 import com.appserver.data.UserDTO;
 
-import com.google.gson.Gson;
+import Utils.JsonReader;
+
 import com.google.gson.reflect.TypeToken;
 
 public class DbContext
@@ -25,58 +25,32 @@ public class DbContext
 
      private Config currentConfig;
     
-    public DbContext(String connectionString) throws IOException
-    {
-    	Gson gson = new Gson();
-    	Type collectionType = new TypeToken<Collection<Config>>(){}.getType();
-    	
-    	FileReader fileReader = null;
-    	
+    public DbContext(String fpath) throws IOException
+    { 	
     	//load configs
-    	try    
-    	{
-    		fileReader = new FileReader(connectionString);
-    		
-    		Collection<Config> configs = gson.fromJson(fileReader, collectionType);
-    		
-    		//load configs
-    		Configs.addAll(configs);    	
-    	}
-    	finally
-    	{
-    		if (fileReader != null) fileReader.close();
-    	}
-    	
+    	Collection<Config> configs = JsonReader.readFromFile(fpath, new TypeToken<Collection<Config>>(){}.getType());   		
+    	Configs.addAll(configs);    	
+   	
     	//load devices
-    	collectionType = new TypeToken<Collection<Device>>(){}.getType();
-    	for(Iterator<Config> i = Configs.iterator(); i.hasNext(); )
-        	try    
-        	{
+    	for(Iterator<Config> i = Configs.iterator(); i.hasNext(); ) 
+    	{
         	    Config config = i.next();
 
-			if (config.isActive()) selectConfig(config);
-        		fileReader = new FileReader(config.getConfigFile());
-        		
-        		Collection<Device> devices = gson.fromJson(fileReader, collectionType);
-        		
+        	    if (config.isActive())
+        	    	selectConfig(config);
+ 
         		//load devices
-        		config.getDevices().addAll(devices);  
-        		
-        		    	//load signals
-	            	for(Iterator<Device> dev = devices.iterator(); dev.hasNext(); )
-	            	{
-	            		  Device device = dev.next();
-	            		  config.getSignals().addAll(device.getSignals());
-	            	}    	
-        	}
-        	finally
-        	{
-        		if (fileReader != null) fileReader.close();
-        	}
-   	
-        }
-
-
+    		Collection<Device> devices = JsonReader.readFromFile(fpath, new TypeToken<Collection<Device>>(){}.getType());
+    		config.getDevices().addAll(devices);  
+    		
+			//load signals
+			for(Iterator<Device> dev = devices.iterator(); dev.hasNext(); )
+			{
+				  Device device = dev.next();
+				  config.getSignals().addAll(device.getSignals());
+			}    	
+    	}
+    }
 
 	public User getUserByUsername(String username)
 	{
@@ -86,7 +60,6 @@ public class DbContext
 		
 		return getUsers().get(index);
 	}
-    
     
 	private void selectConfig(Config config)
 	{
@@ -101,7 +74,7 @@ public class DbContext
 		currentConfig.Activate();
 	}
         
-    	public Config putConfig(int id, UserDTO userdto)
+	public Config putConfig(int id, UserDTO userdto)
 	{
 		//Find user by user name
 		User user = getUserByUsername(userdto.Username);

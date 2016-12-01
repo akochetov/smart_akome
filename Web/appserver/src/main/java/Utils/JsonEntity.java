@@ -13,4 +13,11 @@ public class JsonEntity
 
  		return gson.fromJson(json, c);		
 	}
+	
+	public static String toJson(Object o, Class<?> c)
+	{
+    	Gson gson = new Gson();
+
+ 		return gson.toJson(o, c);		
+	}
 }

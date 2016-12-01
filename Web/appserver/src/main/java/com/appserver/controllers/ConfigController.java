@@ -6,20 +6,21 @@ import static spark.Spark.put;
 
 
 import com.appserver.data.DbContext;
+import com.appserver.data.ServiceContext;
 import com.appserver.models.Config;
 import com.appserver.data.UserDTO;
 
 import Utils.JsonEntity;
 import Utils.JsonTransformer;
-import Utils.Queue;
+import Utils.Queue.AppServerQueue;
 
 public class ConfigController extends BaseController
 {
 	private int DispatcherID = 0;
 
-    public ConfigController(DbContext dbContext,int dispatcherID)
+    public ConfigController(DbContext dbContext,ServiceContext serviceContext,int dispatcherID)
     {
-		super(dbContext);
+		super(dbContext,serviceContext);
 		DispatcherID = dispatcherID;
 	}
 
@@ -40,7 +41,7 @@ public class ConfigController extends BaseController
 	public Config Activate(int id, UserDTO userdto)
 	{
 		Config res = dbContext.putConfig(id,userdto);
-		Queue.Post(DispatcherID,res.getConfigFile());
+		AppServerQueue.PostText(DispatcherID,res.getConfigFile());
 		return res;
 	}
 }

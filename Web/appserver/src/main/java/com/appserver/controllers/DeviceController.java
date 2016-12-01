@@ -6,6 +6,7 @@ import static spark.Spark.put;
 
 
 import com.appserver.data.DbContext;
+import com.appserver.data.ServiceContext;
 import com.appserver.models.Device;
 
 import Utils.JsonEntity;
@@ -13,9 +14,9 @@ import Utils.JsonTransformer;
 
 public class DeviceController extends BaseController
 {
-    public DeviceController(DbContext dbContext)
+    public DeviceController(DbContext dbContext,ServiceContext serviceContext)
     {
-		super(dbContext);
+		super(dbContext,serviceContext);
 		// TODO Auto-generated constructor stub
 	}
 

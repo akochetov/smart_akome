@@ -10,7 +10,7 @@ import static spark.Spark.get;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.appserver.data.DbContext;
-
+import com.appserver.data.ServiceContext;
 import com.appserver.models.Device;
 import com.appserver.models.Signal;
 
@@ -18,12 +18,12 @@ import com.rabbitmq.client.Channel;
 
 import Utils.JsonEntity;
 import Utils.JsonTransformer;
-import Utils.Queue;
+import Utils.Queue.AppServerQueue;
 
 public class SignalTriggerController extends BaseController
 {
-	public SignalTriggerController(DbContext dbContext) {
-		super(dbContext);
+	public SignalTriggerController(DbContext dbContext,ServiceContext serviceContext) {
+		super(dbContext,serviceContext);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -48,6 +48,9 @@ public class SignalTriggerController extends BaseController
 		Device device = dbContext.getDevice(signal.getDeviceID());
 		if (device == null)
 			return 0;
-		return Queue.Post(device,signal);
+		
+		AppServerQueue.PostDeviceSignal(device,signal);
+		
+		return 0;
 	}
 }
