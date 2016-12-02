@@ -41,7 +41,7 @@ public class ConfigController extends BaseController
 	public Config Activate(int id, UserDTO userdto)
 	{
 		Config res = dbContext.putConfig(id,userdto);
-		AppServerQueue.PostText(DispatcherID,res.getConfigFile());
+		AppServerQueue.postText(DispatcherID,res.getConfigFile());
 		return res;
 	}
 }

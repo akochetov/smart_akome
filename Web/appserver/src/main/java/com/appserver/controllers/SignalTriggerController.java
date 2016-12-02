@@ -49,7 +49,7 @@ public class SignalTriggerController extends BaseController
 		if (device == null)
 			return 0;
 		
-		AppServerQueue.PostDeviceSignal(device,signal);
+		AppServerQueue.postDeviceSignal(device,signal);
 		
 		return 0;
 	}

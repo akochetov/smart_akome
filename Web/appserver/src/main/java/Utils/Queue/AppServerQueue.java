@@ -2,6 +2,8 @@ package Utils.Queue;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import com.appserver.models.Device;
@@ -18,26 +20,26 @@ public class AppServerQueue
 		queue = QueueFactory.getInstance(QueueType.RabbitMQ);
 	}
 			
-	private static void PostRaw(String destination,String message)
+	private static void postRaw(String destination,String message)
 	{
 		//TODO	Add queue selection basing on config file contents
 		BaseQueue queue = QueueFactory.getInstance(QueueType.RabbitMQ);
 		queue.post(AppServerQueueDestination.build(destination), message.getBytes());
 	}
 
-	public static void PostDeviceSignal(Device device,Signal signal)
+	public static void postDeviceSignal(Device device,Signal signal)
 	{
     	JsonTransformer json = new JsonTransformer();
         String message = json.render(signal);
-		PostRaw(Integer.toString(device.getSignalDestinationID()), message);
+		postRaw(Integer.toString(device.getSignalDestinationID()), message);
 	}
 	
-	public static void PostText(int destination,String message)
+	public static void postText(int destination,String message)
 	{
-		PostText(Integer.toString(destination), message);
+		postText(Integer.toString(destination), message);
 	}
 
-	public static void PostText(String destination,String message)
+	public static void postText(String destination,String message)
 	{
 		Signal signal = new Signal(0,Integer.parseInt(destination));
 		byte[] bytes = message.getBytes();
@@ -47,25 +49,36 @@ public class AppServerQueue
 		signal.setPattern(longs);
 		JsonTransformer json = new JsonTransformer();
 		String messageString = json.render(signal);
-		PostRaw(destination, messageString);
+		postRaw(destination, messageString);
 	}
 	
-	public static void PostRequest(String destination,AppServerRequest request)
+	public static void postRequest(String destination,AppServerRequest request)
 	{
     	JsonTransformer json = new JsonTransformer();
         String message = json.render(request);   
         
-        PostRaw(destination, message);
+        postRaw(destination, message);
 	}
 	
-	public String createQueue() throws IOException, TimeoutException
+	public String readMessage(String queue, int timeout_sec) throws UnsupportedEncodingException
 	{
-		return queue.createAndConnect();
+		byte[] body = this.queue.get(queue, timeout_sec);
+		return new String(body, "UTF-8");
 	}
 	
 	public String readMessage(String queue) throws UnsupportedEncodingException
 	{
 		byte[] body = this.queue.get(queue);
 		return new String(body, "UTF-8");
+	}
+	
+	public void createQueue(String queue, int timeout_sec) throws IOException, TimeoutException
+	{
+		this.queue.connect(queue,timeout_sec);
+	}
+	
+	public void close()
+	{
+		this.queue.close();
 	}
 }

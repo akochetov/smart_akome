@@ -61,5 +61,6 @@ public class Settings
 	    user = config.getProperty("user");
 	    salt = config.getProperty("salt");
 	    hashedpassword = config.getProperty("hashedpassword");
+	    rr_timeout_sec = Integer.parseInt(config.getProperty("rr_timeout_sec"));
 	}
 }

@@ -1,7 +1,6 @@
 package com.appserver.data;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,42 +13,35 @@ import com.appserver.models.Signal;
 import com.appserver.models.User;
 import com.appserver.data.UserDTO;
 
-import Utils.JsonReader;
-
-import com.google.gson.reflect.TypeToken;
-
 public class DbContext
 {
-     private List<Config> Configs = new ArrayList<Config>();
-     private List<User> Users = new ArrayList<User>();
-
-     private Config currentConfig;
+	private List<User> Users = new ArrayList<User>();
+	
+	private JsonDataSource dataSource;
+	private Config currentConfig;
     
     public DbContext(String fpath) throws IOException
     { 	
-    	//load configs
-    	Collection<Config> configs = JsonReader.readFromFile(fpath, new TypeToken<Collection<Config>>(){}.getType());   		
-    	Configs.addAll(configs);    	
-   	
-    	//load devices
-    	for(Iterator<Config> i = Configs.iterator(); i.hasNext(); ) 
+    	dataSource = new JsonDataSource(fpath);
+    	dataSource.load();
+    	
+    	//check if there are any sessions set as active
+    	boolean bAnyActiveSessions = false;
+    	for(Iterator<Config> i = getConfigs().iterator(); i.hasNext(); ) 
     	{
         	    Config config = i.next();
 
-        	    if (config.isActive())
-        	    	selectConfig(config);
- 
-        		//load devices
-    		Collection<Device> devices = JsonReader.readFromFile(fpath, new TypeToken<Collection<Device>>(){}.getType());
-    		config.getDevices().addAll(devices);  
-    		
-			//load signals
-			for(Iterator<Device> dev = devices.iterator(); dev.hasNext(); )
-			{
-				  Device device = dev.next();
-				  config.getSignals().addAll(device.getSignals());
-			}    	
+        	    if (!bAnyActiveSessions && config.isActive())
+        	    {
+        	    	bAnyActiveSessions = true;   
+        	    	currentConfig = config;
+        	    	break;
+    			}
     	}
+    	
+    	//if no sessions are activated in config - activate first one by default
+    	if (!bAnyActiveSessions && !getConfigs().isEmpty())
+    		selectConfig(getConfigs().get(0));
     }
 
 	public User getUserByUsername(String username)
@@ -61,7 +53,7 @@ public class DbContext
 		return getUsers().get(index);
 	}
     
-	private void selectConfig(Config config)
+	private void selectConfig(Config config) throws IOException
 	{
 		if (currentConfig != null) 
 		{
@@ -72,6 +64,7 @@ public class DbContext
 		System.out.println("Activating config: "+config.getConfigFile());
 		currentConfig = config;
 		currentConfig.Activate();
+		dataSource.save();
 	}
         
 	public Config putConfig(int id, UserDTO userdto)
@@ -87,7 +80,12 @@ public class DbContext
 
 		if (index == -1) throw new NoSuchElementException();
 		
-		selectConfig(getConfigs().get(index));
+		try {
+			selectConfig(getConfigs().get(index));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return currentConfig;
 	}
@@ -135,6 +133,6 @@ public class DbContext
 	
 	public List<Signal> getSignals() {	return currentConfig.getSignals();	}
 	public List<Device> getDevices() {	return currentConfig.getDevices();	}
-	public List<Config> getConfigs() {	return Configs;	}
+	public List<Config> getConfigs() {	return dataSource.getConfigs();	}
 	public List<User> getUsers() {	return Users;	}
 }

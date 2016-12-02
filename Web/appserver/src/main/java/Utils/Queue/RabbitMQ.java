@@ -1,12 +1,15 @@
 package Utils.Queue;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.GetResponse;
 import com.rabbitmq.client.Connection;
-
 import com.rabbitmq.client.Channel;
 
 public class RabbitMQ extends BaseQueue
@@ -17,7 +20,7 @@ public class RabbitMQ extends BaseQueue
     String queue = null;
     
 	@Override
-	public byte[] get(String queue)
+	public byte[] get(String queue, int timeout_sec)
 	{
 		ConnectionFactory f = new ConnectionFactory();
 	    f.setHost(getHost());
@@ -29,9 +32,32 @@ public class RabbitMQ extends BaseQueue
 		    c = f.newConnection();
 		    ch = c.createChannel();
 		    
-	    	ch.queueDeclare(queue, false, false, false, null);
-	    	GetResponse response = ch.basicGet(queue, false);	   
-	    	return response.getBody();
+		    Map<String, Object> args = new HashMap<String, Object>();	    
+		    if(timeout_sec >0)
+		    	args.put("x-expires", timeout_sec * 1000);
+		    
+	    	ch.queueDeclare(queue, false, false, false, args);
+
+	    	Instant time_start = Instant.now();
+	    	while (true)
+	    	{
+	    		GetResponse response = ch.basicGet(queue, true);
+	    		if (response != null)
+	    		{
+	    			//message received
+	    		    byte[] body = response.getBody();
+	    			return body;
+	    		}
+	    		
+	    		if (timeout_sec > 0)
+	    			if (Duration.between(time_start, Instant.now()).toMillis() > timeout_sec*1000)
+	    				break;
+	    		{
+	    			
+	    		}
+	    	}
+	   
+	    	return null;
 	    } catch (IOException e) {
 	    	return null;
 		} catch (TimeoutException e) {
@@ -108,19 +134,16 @@ public class RabbitMQ extends BaseQueue
 	}
 
 	@Override
-	public String createAndConnect() throws IOException, TimeoutException {
+	public void connect(String queue, int timeout_sec) throws IOException, TimeoutException {
 	    factory.setHost(getHost());
 	    connection = factory.newConnection();
 	    channel = connection.createChannel();
-		return channel.queueDeclare().getQueue();
-	}
-
-	@Override
-	public void connect(String queue) throws IOException, TimeoutException {
-	    factory.setHost(getHost());
-	    connection = factory.newConnection();
-	    channel = connection.createChannel();
-		channel.queueDeclare(queue, false, false, false, null);
+	    
+	    Map<String, Object> args = new HashMap<String, Object>();	    
+	    if(timeout_sec >0)
+	    	args.put("x-expires", timeout_sec * 1000);
+	    
+		channel.queueDeclare(queue, false, false, false, args);
 		this.queue = queue;
 	}
 
