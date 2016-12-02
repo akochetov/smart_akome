@@ -9,7 +9,7 @@ public class AppServerQueueDestination {
 	{
 		StringBuilder sb = new StringBuilder();
 		for (int i=0;i<pathes.length;i++)
-			sb.append(pathes[i]+":");
-		return "smart_akome:"+sb.toString();
+			sb.append(":"+pathes[i]);
+		return "smart_akome"+sb.toString();
 	}
 }

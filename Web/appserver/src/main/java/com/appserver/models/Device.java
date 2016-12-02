@@ -10,6 +10,7 @@ public class Device extends EntityBase
 {
 	private int ID = 0;
 	private String Name;
+	private String Processor;
 	private DeviceCommunicationMethod CommunicationMethod;
 	private String Icon;
 	private List<Signal> Signals = new ArrayList<Signal>();

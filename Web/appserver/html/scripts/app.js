@@ -19,7 +19,7 @@ app.config(function ($routeProvider) {
     })
 });
 
-app.controller('ListCtrl', function ($scope, $http) {
+app.controller('ListCtrl', function ($scope, $http, ModalService) {
     $http.get('/api/devices').success(function (data) {  
         $scope.devices = data;
     }).error(function (data, status) {
@@ -44,6 +44,35 @@ app.controller('ListCtrl', function ($scope, $http) {
             console.log('Error ' + data)
         })
     }
+
+    $scope.showDevice = function (device) {
+	    ModalService.showModal({
+	      templateUrl: "views/device_dialog.html",
+	      controller: "DeviceCtrl",
+		inputs: {device: device}
+	    }).then(function(modal) {
+	      modal.element.modal();
+	      modal.close.then(function(result) {
+
+		});
+	    });
+    };
+});
+
+
+app.controller('DeviceCtrl', function ($scope, $http, $element, close, device)
+{
+	$scope.device = device
+
+    $http.get('/api/device_logs/'+device.ID+"?pageIndex=0&pageSize=10").success(function (data) {  
+        $scope.logEntries = data;
+    }).error(function (data, status) {
+        console.log('Error ' + data)
+    })
+
+    $scope.close = function(result) {
+ 	  close(result, 500);  // close, but give 500ms for bootstrap to animate
+	};
 });
 
 

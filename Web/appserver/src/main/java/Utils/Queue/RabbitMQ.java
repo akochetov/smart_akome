@@ -99,11 +99,12 @@ public class RabbitMQ extends BaseQueue
 		    ch = c.createChannel();
 		    
 	    	ch.queueDeclare(queue, false, false, false, null);
-	        ch.basicPublish("", queue, null, body);	      
+	        ch.basicPublish("", queue, null, body);	
+		System.out.println("Posted to queue: "+queue+", data: "+new String(body, "UTF-8"));      
 	    } catch (IOException e) {
 	    	return;
 		} catch (TimeoutException e) {
-			return;
+			e.printStackTrace();
 		}
 	    finally
 	    {

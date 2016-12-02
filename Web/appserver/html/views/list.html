@@ -5,10 +5,12 @@
 		<table>
 			<tr>
 				<td style="width:50px">
+					<a href="" ng-click="showDevice(device)">
 					<img src="/img/{{device.Icon}}" style="-webkit-filter: invert({{+config.InvertColors}});filter: invert({{+config.InvertColors}});margin: 25px 15px 15px 15px; width:50px; height:50px;"/>
+					</a>
             	</td>
             	<td>
-            		<h5 ng-cloack>{{device.Name}}</h5>
+            		<h5 ng-cloack><a href="" style="text-decoration:none" ng-click="showDevice(device)">{{device.Name}}</a></h5>
        				<div class="btn-group" ng-repeat="signal in device.Signals">	
 					<a class="btn btn-default" style="margin-right: 5px; min-width: 50px;" ng-click="triggerSignal(signal)">
 					<i class="fa fa-{{signal.Icon}}" aria-hidden="true"></i>

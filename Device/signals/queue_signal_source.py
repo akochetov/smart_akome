@@ -11,6 +11,7 @@ from model.device_signal import DeviceSignalFactory
 class QueueSignalSource(SignalSource):
     _device = None
     _connection = None
+    _channel = None
     _thread = None
     _last_signal = None
     
