@@ -5,16 +5,16 @@
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Device log</h4>
       </div>
-      <div class="modal-body" style="overflow:auto;min-height:280px !important;">
+      <form class="modal-body" style="overflow:auto;min-height:280px !important;">
 	{{device.Name}}
 
 		<div style="white-space: nowrap;" ng-repeat="log in logEntries" >
 			{{log}}
 		</div>
 
-      </div>
+      </form>
       <div class="modal-footer">
-        <button type="button" ng-click="close()" class="btn btn-primary" data-dismiss="modal">OK</button>
+        <button type="button" ng-click="close()" class="btn btn-primary" data-dismiss="modal" autofocus>OK</button>
       </div>
     </div>
   </div>
