@@ -118,12 +118,12 @@ class ServiceProcessor():
 service = ServiceProcessor()
 service.start()
 
-print("Service processor started")
+service.log("Service processor started")
 
 while True:
     time.sleep(1)
 
 service.stop()
-print("Service processor stopped")
+service.log("Service processor stopped")
 
 

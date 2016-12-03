@@ -104,10 +104,18 @@ module.factory('ModalService', ['$animate', '$document', '$compile', '$controlle
           //  Finally, append the modal to the dom.
           if (options.appendElement) {
             // append to custom append element
-            appendChild(options.appendElement, modalElement);
+            appendChild(options.appendElement, modalElement).then(function(){
+		var af = modalElement.find('[autofocus]');
+		if (af.length>0)
+			af[0].focus();
+		});
           } else {
             // append to body when no custom append element is specified
-            appendChild(body, modalElement);
+            appendChild(body, modalElement).then(function(){
+		var af = modalElement.find('[autofocus]');
+		if (af.length>0)
+			af[0].focus();
+		})
           }
 
           //  We now have a modal object...

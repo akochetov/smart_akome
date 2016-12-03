@@ -5,7 +5,7 @@
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Device log</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow:auto;min-height:280px !important;">
 	{{device.Name}}
 
 		<div style="white-space: nowrap;" ng-repeat="log in logEntries" >

@@ -4,11 +4,10 @@ import time
 ir = BaseProcessor()
 ir.start()
 
-print("Processor started for device: "+str(ir._device.ID))
+ir.log("IR Processor started for device: "+str(ir._device.ID))
 
 while True:
     time.sleep(1)
 
-print("IR speakers processor...")
 ir.stop()
-print("IR processor stopped")
+ir.log("IR processor stopped")
