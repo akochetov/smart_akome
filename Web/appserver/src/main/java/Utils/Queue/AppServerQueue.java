@@ -29,9 +29,9 @@ public class AppServerQueue
 
 	public static void postDeviceSignal(Device device,Signal signal)
 	{
-    	JsonTransformer json = new JsonTransformer();
-        String message = json.render(signal);
-		postRaw(Integer.toString(device.getSignalDestinationID()), message);
+    		JsonTransformer json = new JsonTransformer();
+	        String message = json.render(signal);
+		postRaw(Integer.toString(device.getID()), message);
 	}
 	
 	public static void postText(int destination,String message)

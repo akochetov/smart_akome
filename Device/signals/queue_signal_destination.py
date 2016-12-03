@@ -42,7 +42,7 @@ class QueueSignalDestination(SignalDestination):
         self._connection.close()
         self._connection = None
         self._channel = None
-        self.log("Destination queue has been shot down: smart_akome:"+str(self._device.getDestinationID()))
+        #self.log("Destination queue has been shot down: smart_akome:"+str(self._device.getDestinationID()))
 
     def initConnection(self):
         self.stop()
@@ -51,7 +51,7 @@ class QueueSignalDestination(SignalDestination):
         self._channel = self._connection.channel()
 
         self._channel.queue_declare(queue='smart_akome:'+str(self._device.getDestinationID()), durable = False, exclusive = False, auto_delete = False)
-        self.log("Destination queue has been set up: smart_akome:"+str(self._device.getDestinationID()))
+        #self.log("Destination queue has been set up: smart_akome:"+str(self._device.getDestinationID()))
          
 
 #----------------------------------------------------
