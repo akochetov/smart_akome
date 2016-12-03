@@ -63,6 +63,8 @@ static PyObject *py_irEnableReceive(PyObject *self, PyObject *args)
     receivers[pin] = new IrReceiver();
     receivers[pin]->enableReceive(pin);
 
+	piHiPri(99);
+
     Py_RETURN_NONE;
 }
 
@@ -77,6 +79,8 @@ static PyObject *py_irDisableReceive(PyObject *self, PyObject *args)
     IrReceiver* irrx = receivers[pin];
     receivers.erase(pin);
     delete irrx;
+
+	piHiPri(0);
 
     Py_RETURN_NONE;
 }

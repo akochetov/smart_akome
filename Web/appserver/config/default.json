@@ -90,6 +90,33 @@
         "DeviceID": 18629,
 	"SignalDestinationID": 18629,
         "Icon":"living"
+      },
+      {
+        "ID": 10,
+        "Name": "On/Off",
+        "SignalDirection": 1,
+        "Pattern": [2907897600],
+        "DeviceID": 54152,
+	"SignalDestinationID": 54152,
+        "Icon":"speakers"
+      },
+      {
+        "ID": 11,
+        "Name": "Vol.Up",
+        "SignalDirection": 1,
+        "Pattern": [3108437760],
+        "DeviceID": 54152,
+	"SignalDestinationID": 54152,
+        "Icon":"speakers"
+      },
+      {
+        "ID": 12,
+        "Name": "Vol.Dwn",
+        "SignalDirection": 1,
+        "Pattern": [3927310080],
+        "DeviceID": 54152,
+	"SignalDestinationID": 54152,
+        "Icon":"speakers"
       }
     ]
   },  
