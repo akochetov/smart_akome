@@ -10,11 +10,11 @@
 					</a>
             	</td>
             	<td>
-            		<h5 ng-cloack><a href="" style="text-decoration:none" ng-click="showDevice(device)">{{device.Name}}</a></h5>
+            		<h5 class="ng-cloak"><a href="" style="text-decoration:none" ng-click="showDevice(device)">{{device.Name}}</a></h5>
        				<div class="btn-group" ng-repeat="signal in device.Signals">	
 					<a class="btn btn-default" style="margin-right: 5px; min-width: 50px;" ng-click="triggerSignal(signal)">
 					<i class="fa fa-{{signal.Icon}}" aria-hidden="true"></i>
-					<span class="hidden-xs" ng-cloack>
+					<span class="hidden-xs ng-cloak">
 					{{signal.Name}}
 					</span>
 					</a>

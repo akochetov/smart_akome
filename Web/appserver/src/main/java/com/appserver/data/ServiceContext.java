@@ -15,7 +15,7 @@ import Utils.Queue.AppServerResponse;
 
 public class ServiceContext
 {
-	public String[] getDeviceLogs(Device device, int pageIndex, int pageSize)
+	public AppServerResponse getDeviceLogs(Device device, int pageIndex, int pageSize)
 	{
     	UUID responseQueue = UUID.randomUUID();
     	AppServerQueue queue = new AppServerQueue();
@@ -31,8 +31,7 @@ public class ServiceContext
 			AppServerQueue.postRequest("service:log", request);
 			String result = queue.readMessage(responseQueue.toString(),Settings.getRequestResponseTimeoutSec());
 			if (result == null) throw new TimeoutException();
-			AppServerResponse response = (AppServerResponse)JsonEntity.fromJson(result,AppServerResponse.class);
-			return response.responseBody.split("\n");
+			return (AppServerResponse)JsonEntity.fromJson(result,AppServerResponse.class);
     	} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

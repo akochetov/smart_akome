@@ -7,13 +7,28 @@
       </div>
       <form class="modal-body" style="overflow:auto;min-height:280px !important;">
 	{{device.Name}}
-
-		<div style="white-space: nowrap;" ng-repeat="log in logEntries" >
-			{{log}}
+		<div style="white-space: nowrap;" ng-repeat="log in logEntries track by $index" >
+			{{log}}&nbsp;&nbsp;
 		</div>
-
       </form>
       <div class="modal-footer">
+	<ul class="pagination pull-left" style="margin:0px" ng-hide="pagesNumber == 0">
+		<li>
+			<a  class="ng-cloak" href="#" ng-click="pageIndex == 0 ? $event.preventDefault() : getLogs(0);$event.preventDefault()"><<</a>
+		</li>
+		<li>
+			<a  class="ng-cloak" href="#" ng-click="pageIndex == 0 ? $event.preventDefault() : getLogs(pageIndex-1);$event.preventDefault()"><</a>
+		</li>
+		<li class="ng-cloak" style="pointer-events:none;">
+			<span style="padding-left:5px;padding-right:5px;">{{pageIndex+1}}/{{pagesNumber}}</span>
+		</li>
+		<li>
+			<a class="ng-cloak" href="#" ng-click="pageIndex == pagesNumber-1 ? $event.preventDefault() : getLogs(pageIndex+1);$event.preventDefault()">></a>
+		</li>
+		<li>
+			<a class="ng-cloak" href="#" ng-click="pageIndex == pagesNumber-1 ? $event.preventDefault() : getLogs(pagesNumber-1);$event.preventDefault()">>></a>
+		</li>
+	</ul>
         <button type="button" ng-click="close()" class="btn btn-primary" data-dismiss="modal" autofocus>OK</button>
       </div>
     </div>

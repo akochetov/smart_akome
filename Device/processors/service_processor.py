@@ -1,6 +1,7 @@
 import threading
 import datetime
 import time
+import math
 
 import pika
 
@@ -97,13 +98,17 @@ class ServiceProcessor():
                 if (s):
                     lines=lines+1
                     res = res + s
+            #read rest of log
+            while (log.readline()):
+                lines=lines+1
+
         except:
             log.close()
             
         response = AppServerResponse()
-        response.pagesNumber = int(lines/req.pageSize)
+        response.pagesNumber = math.ceil(lines/req.pageSize)
         response.pageSize = req.pageSize
-        response.responseBody = res
+        response.responseBody = res.split('\n')[:-1]
        
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
         channel = connection.channel()

@@ -7,6 +7,10 @@ var app = angular.module('appserver', [
     'ngAnimate'
 ]);
 
+app.constant('deviceLogConfig', {
+	"pageSize":10
+});
+
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'views/list.html',
@@ -60,19 +64,32 @@ app.controller('ListCtrl', function ($scope, $http, ModalService) {
 });
 
 
-app.controller('DeviceCtrl', function ($scope, $http, $element, close, device)
+app.controller('DeviceCtrl', function ($scope, $http, $element, close, device, deviceLogConfig)
 {
-	$scope.device = device
 
-    $http.get('/api/device_logs/'+device.ID+"?pageIndex=0&pageSize=10").success(function (data) {  
-        $scope.logEntries = data;
-    }).error(function (data, status) {
-        console.log('Error ' + data)
-    })
+	$scope.getLogs = function(pageIndex) {
+
+	    $http.get('/api/device_logs/'+device.ID+'?pageIndex='+pageIndex+'&pageSize='+deviceLogConfig.pageSize).success(function (data) {  
+	        $scope.logEntries = data.responseBody;
+		$scope.pageIndex = pageIndex;
+		$scope.pagesNumber = data.pagesNumber;
+		$scope.pageSize = data.pageSize;
+	    }).error(function (data, status) {
+	        console.log('Error ' + data)
+    		})
+	};
 
     $scope.close = function(result) {
  	  close(result, 500);  // close, but give 500ms for bootstrap to animate
 	};
+
+	$scope.numArray = function(num)
+	{
+		return new Array(num);
+	}
+
+	$scope.device = device
+	$scope.getLogs(0);
 });
 
 
@@ -100,6 +117,8 @@ app.controller('LoginCtrl', function ($scope, $element, close)
     };
 
     $scope.close = function() {
+	//  Manually hide the modal.
+	$element.modal('hide');	
  	  close({
 		username: $scope.username,
 		password: $scope.password

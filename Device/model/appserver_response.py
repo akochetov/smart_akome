@@ -2,7 +2,7 @@ import sys
 import json
 
 class AppServerResponse():   
-    responseBody = ''
+    responseBody = None
     pagesNumber = 0
     pageSize = 0
    
