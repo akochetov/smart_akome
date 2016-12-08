@@ -83,7 +83,7 @@ class ServiceProcessor():
         fname = logs_folder+device.Processor+"_"+str(device.ID)+".log"
 
         res = '';
-        lines = 0
+        lines = 0.0
 
         log = BackwardsReader(fname, 4096)
 
