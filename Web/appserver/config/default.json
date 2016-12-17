@@ -1,136 +1,5 @@
 [
-  {
-    "ID": 54154,
-    "Name": "Infrared Sensor",
-    "CommunicationMethod": 1,
-    "SignalSource": "ir",
-    "SignalDestination": "queue",
-    "Processor": "ir_processor",
-    "Icon": "camera.png",
-    "Settings": {"pin":24},
-    "Signals":
-    [
-      {
-        "ID": 1,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [3910598400],
-        "DeviceID": 2043,
-	"SignalDestinationID": 2043,
-        "Icon":"bedroom"
-      },
-      {
-        "ID": 2,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [3860463360],
-        "DeviceID": 5004,
-	"SignalDestinationID": 5004,
-        "Icon":"desk"
-      },
-      {
-        "ID": 3,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [4061003520],
-        "DeviceID": 23783,
-	"SignalDestinationID": 23783,
-        "Icon":"nightlight"
-      },
-{
-        "ID": 4,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [4077715200],
-        "DeviceID": 6407,
-	"SignalDestinationID": 6407,
-        "Icon":"entrance"
-      },
-      {
-        "ID": 5,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [3877175040],
-        "DeviceID": 8100,
-	"SignalDestinationID": 8100,
-        "Icon":"wc"
-      },
-      {
-        "ID": 6,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [2707357440],
-        "DeviceID": 4233,
-	"SignalDestinationID": 4233,
-        "Icon":"bath"
-      },
-      {
-        "ID": 7,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [4144561920],
-        "DeviceID": 8493,
-	"SignalDestinationID": 8493,
-        "Icon":"kitchen"
-      },
-      {
-        "ID": 8,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [3810328320],
-        "DeviceID": 9246,
-	"SignalDestinationID": 9246,
-        "Icon":"kids"
-      },
-      {
-        "ID": 9,
-        "Name": "On",
-        "SignalDirection": 1,
-        "Pattern": [2774204160],
-        "DeviceID": 18629,
-	"SignalDestinationID": 18629,
-        "Icon":"living"
-      },
-      {
-        "ID": 10,
-        "Name": "On/Off",
-        "SignalDirection": 1,
-        "Pattern": [2907897600],
-        "DeviceID": 54152,
-	"SignalDestinationID": 54152,
-        "Icon":"speakers"
-      },
-      {
-        "ID": 11,
-        "Name": "Vol.Up",
-        "SignalDirection": 1,
-        "Pattern": [3108437760],
-        "DeviceID": 54152,
-	"SignalDestinationID": 54152,
-        "Icon":"speakers"
-      },
-      {
-        "ID": 12,
-        "Name": "Vol.Dwn",
-        "SignalDirection": 1,
-        "Pattern": [3927310080],
-        "DeviceID": 54152,
-	"SignalDestinationID": 54152,
-        "Icon":"speakers"
-      }
-    ]
-  },  
-{
-    "ID": 54150,
-    "Name": "Livolo Radio Transmitter",
-    "CommunicationMethod": 1,
-    "SignalSource": "queue",
-    "SignalDestination": "livolo",
-    "Processor": "livolo_processor",
-    "Settings": {"pin":23},
-    "Signals":[]
-  },
-  {
+ {
     "ID": 54152,
     "Name": "Speakers",
     "CommunicationMethod": 2,
@@ -175,7 +44,7 @@
       }
     ]
   },
- {
+  {
     "ID": 54151,
     "Name": "All light",
     "CommunicationMethod": 2,
@@ -517,5 +386,137 @@
         "Icon":"child"
       }
     ]
+  },
+  {
+    "ID": 54154,
+    "Name": "Infrared Sensor",
+    "CommunicationMethod": 1,
+    "SignalSource": "ir",
+    "SignalDestination": "queue",
+    "Processor": "ir_processor",
+    "Icon": "camera.png",
+    "Settings": {"pin":24},
+    "Signals":
+    [
+      {
+        "ID": 1,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [3910598400],
+        "DeviceID": 2043,
+	"SignalDestinationID": 2043,
+        "Icon":"bedroom"
+      },
+      {
+        "ID": 2,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [3860463360],
+        "DeviceID": 5004,
+	"SignalDestinationID": 5004,
+        "Icon":"desk"
+      },
+      {
+        "ID": 3,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [4061003520],
+        "DeviceID": 23783,
+	"SignalDestinationID": 23783,
+        "Icon":"nightlight"
+      },
+      {
+        "ID": 4,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [4077715200],
+        "DeviceID": 6407,
+	"SignalDestinationID": 6407,
+        "Icon":"entrance"
+      },
+      {
+        "ID": 5,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [3877175040],
+        "DeviceID": 8100,
+	"SignalDestinationID": 8100,
+        "Icon":"wc"
+      },
+      {
+        "ID": 6,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [2707357440],
+        "DeviceID": 4233,
+	"SignalDestinationID": 4233,
+        "Icon":"bath"
+      },
+      {
+        "ID": 7,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [4144561920],
+        "DeviceID": 8493,
+	"SignalDestinationID": 8493,
+        "Icon":"kitchen"
+      },
+      {
+        "ID": 8,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [3810328320],
+        "DeviceID": 9246,
+	"SignalDestinationID": 9246,
+        "Icon":"kids"
+      },
+      {
+        "ID": 9,
+        "Name": "On",
+        "SignalDirection": 1,
+        "Pattern": [2774204160],
+        "DeviceID": 18629,
+	"SignalDestinationID": 18629,
+        "Icon":"living"
+      },
+      {
+        "ID": 10,
+        "Name": "On/Off",
+        "SignalDirection": 1,
+        "Pattern": [2907897600],
+        "DeviceID": 54152,
+	"SignalDestinationID": 54152,
+        "Icon":"speakers"
+      },
+      {
+        "ID": 11,
+        "Name": "Vol.Up",
+        "SignalDirection": 1,
+        "Pattern": [3108437760],
+        "DeviceID": 54152,
+	"SignalDestinationID": 54152,
+        "Icon":"speakers"
+      },
+      {
+        "ID": 12,
+        "Name": "Vol.Dwn",
+        "SignalDirection": 1,
+        "Pattern": [3927310080],
+        "DeviceID": 54152,
+	"SignalDestinationID": 54152,
+        "Icon":"speakers"
+      }
+    ]
+  },  
+{
+    "ID": 54150,
+    "Name": "Livolo Radio Transmitter",
+    "CommunicationMethod": 3,
+    "SignalSource": "queue",
+    "SignalDestination": "livolo",
+    "Processor": "livolo_processor",
+    "Icon": "camera.png",
+    "Settings": {"pin":23},
+    "Signals":[]
   }
 ]

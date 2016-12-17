@@ -27,7 +27,7 @@ def log(message):
 class ProcessorPathBuilder():   
     @staticmethod
     def getPath(device):
-        return "sudo python -u "+processors_folder+device.Processor+".py '"+DeviceFactory.toJson(device)+"' >"+logs_folder+device.Processor+"_"+str(device.ID)+".log 2>&1 &"
+        return "sudo python -u "+processors_folder+device.Processor+".py '"+DeviceFactory.toJson(device)+"' >> "+logs_folder+device.Processor+"_"+str(device.ID)+".log 2>&1 &"
 
 class DeviceStarter():
     @staticmethod
