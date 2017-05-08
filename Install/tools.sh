@@ -6,6 +6,8 @@ sudo apt-get install tightvncserver
 sudo apt-get install xrdp
 sudo apt-get install maven
 
+sudo update-java-alternatives --set jdk-8-oracle-arm32-vfp-hflt
+
 echo "Installing kodi..."
 sudo apt-get install kodi
 
