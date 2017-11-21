@@ -1,6 +1,0 @@
-
-cron setup script (to run in daemons setup)
-0 0 1 * *  /home/pi/backup.sh
-
-backup.sh
-sudo dd bs=4M if=/dev/sdb | gzip > raspbian.img.gz

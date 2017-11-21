@@ -16,4 +16,10 @@ echo "Setting up pathes to daemon apps..."
 
 sudo sed -i -e 's!{dir}!'$DIR'!g' $CONF_FILE
 
+echo "Adding backup job..."
+crontab -l > mycron
+echo "0 0 1 * * $DIR/backup.sh" >> mycron
+crontab mycron
+rm mycron
+
 echo "Done."
