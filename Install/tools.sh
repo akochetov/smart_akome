@@ -19,10 +19,10 @@ echo "Configuring java..."
 
 sudo update-java-alternatives --set jdk-8-oracle-arm32-vfp-hflt
 
-echo "Installing kodi..."
-sudo apt-get install kodi
-
 echo "Configuring gpu_mem=128 in /boot/config.txt
 sudo sed -i -e '$ a\\ngpu_mem=128' /boot/config.txt
+
+echo "Installing kodi..."
+sudo apt-get install kodi
 
 echo "Please reboot now"
