@@ -1,0 +1,25 @@
+#!/bin/bash
+# /etc/init.d/kodi
+
+### BEGIN INIT INFO
+# Provides:          kodi
+# Required-Start:	
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Description:       This service is used to manage a kodi
+### END INIT INFO
+
+case "$1" in
+	start)
+		kodi
+		;;
+	stop)
+		sudo killall kodi
+		;;
+	*)
+		exit 1
+		;;
+esac
+
+exit 0

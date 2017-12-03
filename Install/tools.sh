@@ -24,5 +24,9 @@ sudo sed -i -e '$ a\\ngpu_mem=128' /boot/config.txt
 
 echo "Installing kodi..."
 sudo apt-get install kodi
+sudo cp kodi.defaults /etc/default/kodi
+sudo cp kodi /etc/init.d/kodi
+sudo chmod +x /etc/init.d/kodi
+sudo update-rc.d kodi defaults
 
 echo "Please reboot now"
