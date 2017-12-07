@@ -24,9 +24,13 @@ sudo sed -i -e '$ a\\ngpu_mem=128' /boot/config.txt
 
 echo "Installing kodi..."
 sudo apt-get install kodi
+
 sudo cp kodi.defaults /etc/default/kodi
-sudo cp kodi /etc/init.d/kodi
-sudo chmod +x /etc/init.d/kodi
-sudo update-rc.d kodi defaults
+sudo cp kodi.service /lib/systemd/system/kodi.service
+sudo systemctl enable kodi.service
+cp autoexec.py ~/.kodi/userdata/
+
+echo "Configuring keyboard..."
+cp lxkeymap.cfg ~/.config/lxkeymap.cfg
 
 echo "Please reboot now"
