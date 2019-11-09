@@ -1,6 +1,6 @@
 #get wiringPi
-git clone git://git.drogon.net/wiringPi
+git clone https://github.com/WiringPi/WiringPi
 
 #build wiring Pi
-cd wiringPi
+cd WiringPi
 ./build

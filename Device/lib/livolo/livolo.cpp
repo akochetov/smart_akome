@@ -1,24 +1,3 @@
-/*
-  Livolo.cpp - Library for Livolo wireless switches.
-  First created by Sergey Chernov, October 25, 2013, and adapted and simplified Dec 3, 2013 by
-  M. Westenberg (mw12554 @@ hotmail.com)
-  
-  XXX This code really needs some cleaning and is far too complicated
-  XXX There is no receiver support so far, as the protocol is really (I mean REALLY) simple/dumm
-  		and leads to many errorneous codes discovered
-  
-  Released into the public domain.
-  
-  Usage:
-  As said, the Livolo protocol is rather unreliable. Even the transmitter keychain which is well received 
-  by my Raspberry sniffer/receiver program has a very limited range for its own devices. In fact, reception
-  can only be reliable when the switches are in sight and one can check whether commands are received.
-  
-  Also, as buttons A-C toggle the value of the switch, one would NEVER be sure whether the switch is on or off.
-  A workaround would be: ALWAYS first send code D, all devices OFF and then transmit on values for ALL buttons
-  again. In practice this might not be desirable, should work though.
-*/
-
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -34,7 +13,7 @@
 #include <arpa/inet.h>
 #include "livolo.h"
 
-#define REPEATS 150
+#define REPEATS 50
 
 // Global Variables
 //
@@ -43,16 +22,15 @@ unsigned char device = 8;							// Key A is number 8, B16 (bit 16-22, with bit 1
 unsigned int loops = 1;
 unsigned int repeats = REPEATS;
 bool inverted = false;
-unsigned char output_pin = 4;						// wiringPi PIN number
 
-int fflg = 0;										// Fake flag, for debugging. Init to false. If true, print values only
+unsigned char fflg = 0;										// Fake flag, for debugging. Init to false. If true, print values only
 
 // I found the timing parameters below to be VERY VERY critical
 // Only a few uSecs extra will make the switch fail.
-//
-int p_short = 150;									// Originally 160. With WiringPi hi prio 150 seems to work best
-int p_long = 305;									// Originally 320. With WiringPi hi prio 305 seems to work best
-int p_start = 520;									// Originally 520. With WiringPi hi prio 520 seems to work best
+// https://wiki.pilight.org/livolo_switch_v7_0
+unsigned int p_short = 170;									// Originally 160. With WiringPi hi prio 150 seems to work best
+unsigned int p_long = 340;									// Originally 320. With WiringPi hi prio 305 seems to work best
+unsigned int p_start = 595;									// Originally 520. With WiringPi hi prio 520 seems to work best
 
 Livolo::Livolo(unsigned char pin)
 {
@@ -72,9 +50,20 @@ Livolo::Livolo(unsigned char pin)
 //
 //
 void Livolo::sendButton(unsigned int remoteID, unsigned char keycode) {
+  // start transmitting base frequency if not inverted
+  //if (!inverted) {
+  //    digitalWrite(txPin, HIGH);
+  //    delayMicroseconds(p_start); 
+  //}
 
   for (pulse= 0; pulse <= repeats; pulse++) 		// how many times to transmit a command
   {
+        // start transmitting base frequency if not inverted
+        if (!inverted) {
+          digitalWrite(txPin, HIGH);
+          //delayMicroseconds(p_start * 2);
+        }
+
   	high = !inverted;								// if inverted, start invert all pulses
 	if (high) 
 		sendPulse(1);
@@ -105,11 +94,8 @@ void Livolo::sendButton(unsigned int remoteID, unsigned char keycode) {
     if (fflg==1) printf("\n");
   }
   
-  if (high)
-  	digitalWrite(txPin, LOW);
-  else 
-  	digitalWrite(txPin, HIGH);
-
+  // always put to LOW to avoid transmitter constantly generating radio wave when idle
+  digitalWrite(txPin, LOW);
 }
 
 // =======================================================================================
@@ -146,7 +132,6 @@ void Livolo::selectPulse(unsigned char inBit) {
 // slightly corrected pulse length, use old (commented out) values if these not working for you
 
 void Livolo::sendPulse(unsigned char txPulse) {
-
   if (fflg == 0)
   {
 	switch(txPulse) 								// transmit pulse
@@ -178,7 +163,7 @@ void Livolo::sendPulse(unsigned char txPulse) {
 
 	case 5:											// "Low One"
 		digitalWrite(txPin, HIGH);
-		delayMicroseconds(p_long); 					// 290
+		delayMicroseconds(p_long); 					// 293
 	break; 
 	}
   }
